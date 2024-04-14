@@ -6,7 +6,7 @@ const UserDetailScreen = ({ participantData, qrValue, handleGoBack, handlePrint,
   return (
     <>
       <NavBar />
-      <div className="bg-white w-11/12 flex flex-row p-4  items-center justify-between h-fit mt-10  m-auto border-2 border-black rounded-md">
+      <div className="bg-white w-11/12 flex lg:flex-row md:flex-row flex-col p-4  items-center justify-between h-fit mt-10  m-auto border-2 border-black rounded-md">
         {/* User Data Section */}
 
         <div className="h-60 w-1/2 p-2">

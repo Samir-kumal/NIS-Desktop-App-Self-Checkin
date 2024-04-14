@@ -3,7 +3,7 @@ import './assets/main.css'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import {  RouterProvider, createHashRouter } from 'react-router-dom'
-import Login from './screens/Login'
+// import Login from './screens/Login'
 import App from './screens/MainScreen'
 // import ProtectedRoutes from './screens/ProtectedRoutes'
 import AuthProvider from './context/AuthContext'
@@ -11,10 +11,10 @@ import Loader from './screens/Loader'
 import AdvancedSearch from './screens/AdvancedSearch'
 
 const router = createHashRouter([
-  {
-    path: '/login',
-    element: <Login />
-  },
+  // {
+  //   path: '/login',
+  //   element: <Login />
+  // },
 
   {
     path: '/',

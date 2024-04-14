@@ -25,6 +25,8 @@ const UserSearch = () => {
   // const [result, setResult] = useState<dataProps[] | null>(null)
   // const [isSubmitted, setIsSubmitted] = useState(false)
   // const [isModalVisible, setIsModalVisible] = useState(false)
+  const [isAlreadyPrinted, setIsAlreadyPrinted] = useState(false)
+
   const [isLoading, setIsLoading] = useState(false)
   const [isPrint, setIsPrint] = useState(false)
   const [error, setError] = useState({
@@ -40,7 +42,25 @@ const UserSearch = () => {
   // const { token } = useAuthProvider()
   const navigate = useNavigate()
   const [participantData, setParticipantData] = useState<any | null>(null)
-  const ipcHandle = () => window.electron.ipcRenderer.send('QR', 'Hello from renderer process')
+  const ipcHandle = () => window.electron.ipcRenderer.invoke('QR-Generate')
+  const ipcResponseSuccess = () =>
+    window.electron.ipcRenderer.on('print-success', ( args) => {
+      console.log(args)
+      UpdateQRCodePrintStatus(participantData.qr_code)
+      setIsPrint(false)
+      setIsAlreadyPrinted(true);
+      setParticipantData(null);
+
+    })
+  const ipcResponseError = () =>
+    window.electron.ipcRenderer.on('print-error', ( args) => {
+      console.log(args)
+      setIsPrint(false)
+      setPrintStatus({
+        state: false,
+        message: JSON.stringify(args)
+      })
+    })
 
   // Call the function with the URL of the image you want to load
 
@@ -105,8 +125,8 @@ const UserSearch = () => {
         message: data.message
       })
       console.log(data, 'print status Updated')
-      setIsPrint(true)
-      ipcHandle()
+    
+  
     } catch (error) {
       console.log(error)
       if (error instanceof AxiosError) {
@@ -156,18 +176,32 @@ const UserSearch = () => {
   const handleGoBack = () => {
     // navigate('/main')
     setParticipantData(null)
+    setPrintStatus({
+      state: false,
+      message: ''
+    })
+    setIsAlreadyPrinted(false);
   }
 
   const handlePrint = () => {
-    setTimeout(() => {
-      UpdateQRCodePrintStatus(input)
-
-    }, 500)
-    // setIsPrint(true)
-    // ipcHandle()
-    // setTimeout(() => {
-    //   setIsPrint(false)
-    // }, 500)
+    console.log('printing')
+    if (participantData.card_printed === 'yes' || isAlreadyPrinted) {
+      setPrintStatus({
+        state: false,
+        message: 'Card already printed'
+      })
+      setIsAlreadyPrinted(true)
+      return
+    }
+    if (!isAlreadyPrinted) {
+      setIsPrint(true)
+      ipcHandle()
+      ipcResponseSuccess()
+      ipcResponseError()
+      
+      
+      
+    }
   }
   if (participantData && !isPrint && !isLoading) {
     console.log(participantData)
@@ -191,12 +225,12 @@ const UserSearch = () => {
     <>
       <NavBar />
       <div className="flex w-full h-fit justify-end text-xs">
-        <button
+        {/* <button
           className="bg-[#0f2ea0] text-white p-2 m-1 mx-4"
           onClick={() => navigate('/advanced-search')}
         >
           Advanced Search
-        </button>
+        </button> */}
       </div>
       <div>
         <h1 className="text-5xl font-bold text-center mt-10">Self Check in</h1>
