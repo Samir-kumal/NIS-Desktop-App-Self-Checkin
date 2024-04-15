@@ -6,13 +6,18 @@ const UserDetailScreen = ({ participantData, qrValue, handleGoBack, handlePrint,
   return (
     <>
       <NavBar />
-      <div className="bg-white w-11/12 flex lg:flex-row md:flex-row flex-col p-4  items-center justify-between h-fit mt-10  m-auto border-2 border-black rounded-md">
+      <div className='flex w-[97vw]  m-auto  h-fit  py-4  justify-end'>
+      <button onClick={handleGoBack} className="bg-[#1D4389] text-white px-4 py-2 rounded-md">
+          Go Back
+        </button>
+      </div>
+      <div className="bg-white w-[97vw] flex lg:flex-row md:flex-row flex-col p-4  items-center justify-between h-fit mt-1  m-auto border-2 border-black rounded-md">
         {/* User Data Section */}
 
-        <div className="h-60 w-1/2 p-2">
+        <div className=" max-h-fit w-1/2 p-2">
           <h1 className="text-left text-3xl mb-4 font-bold">Participant Information</h1>
 
-          <div className="flex h-full w-full  flex-row items-start  justify-between">
+          <div className="flex lg:flex-row md:flex-row flex-col h-full w-full  items-start  justify-between">
             <div className="h-full">
               <p className="font-bold">Full Name</p>
               <p>{participantData.full_name}</p>
@@ -61,11 +66,9 @@ const UserDetailScreen = ({ participantData, qrValue, handleGoBack, handlePrint,
           </div>
         </div>
       </div>
-      <div className="w-11/12 flex m-auto my-4 h-fit flex-row justify-between items-center">
-        <button onClick={handleGoBack} className="bg-[#1D4389] text-white p-2 rounded-md">
-          Go Back
-        </button>
-        <button onClick={handlePrint} className="bg-green-500 text-white p-2 rounded-md">
+      <div className="w-[97vw]  flex m-auto my-4 h-fit flex-row justify-end items-center">
+       
+        <button onClick={handlePrint} className="bg-green-500 text-white px-4 py-2 rounded-md">
           Print QR
         </button>
       </div>

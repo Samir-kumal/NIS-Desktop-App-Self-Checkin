@@ -94,6 +94,15 @@ const UserSearch = () => {
 
       setParticipantData(data.data.particiapnt)
       setQrValue(data.data.qr_code_link)
+      if(data.data.particiapnt.card_printed === 'yes'){
+        setPrintStatus({
+          state: false,
+          message: 'Card Already Printed'
+        })
+        setIsAlreadyPrinted(true)
+      }
+     
+
     } catch (error) {
       console.log(error)
       if (error instanceof AxiosError) {
@@ -188,7 +197,7 @@ const UserSearch = () => {
     if (participantData.card_printed === 'yes' || isAlreadyPrinted) {
       setPrintStatus({
         state: false,
-        message: 'Card already printed'
+        message: 'Card Already Printed'
       })
       setIsAlreadyPrinted(true)
       return
