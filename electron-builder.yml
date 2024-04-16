@@ -1,4 +1,4 @@
-appId: com.electron.app
+appId: com.selfcheckin.app
 productName: Self-CheckIn-app
 directories:
   buildResources: build
