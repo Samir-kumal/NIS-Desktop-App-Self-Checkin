@@ -37,8 +37,8 @@ const UserDetailScreen = ({ participantData, qrValue, handleGoBack, handlePrint,
               <p className="font-bold  mt-4">Organization Name</p>
               <p>{participantData.organization_name}</p>
 
-              <p className="font-bold  mt-4">Phone no.</p>
-              <p>{participantData.phone.length === 0 ? 'Not Available' : participantData.phone}</p>
+              <p className="font-bold  mt-4"> {participantData.registration_fee_detail}</p>
+              <p></p>
             </div>
             <span></span>
             <div className="">
@@ -76,12 +76,12 @@ const UserDetailScreen = ({ participantData, qrValue, handleGoBack, handlePrint,
       >
         {printStatus.message.length > 0 && (
           <div
-            className={`    h-fit p-2 flex    ${printStatus.state === true ? 'bg-green-500 lg:w-[85vw] md:w-[80vw] w-[80vw]' : 'bg-red-400 w-full'}`}
+            className={`    h-fit p-2 flex    ${printStatus.state === true ? ' lg:w-[85vw] md:w-[80vw] w-[80vw]' : ' w-full'}`}
           >
-            {<span className={`font-bold  text-white`}>{printStatus.message}</span>}
+            {<span className={`font-bold ${printStatus.state === true ? "text-green-500" : "text-red-500"} `}>{printStatus.message}</span>}
           </div>
         )}
-      { printStatus.state === true || printStatus.message.length === 0  &&   <button  onClick={handlePrint} className={ `bg-green-500 text-white px-4 py-2 rounded-md print`}>
+      { printStatus.state === true || printStatus.message.length === 0  &&   <button  onClick={handlePrint} className={ `bg-green-500 text-white px-4 py-3 rounded-md print`}>
           Print QR
         </button>}
       </div>
