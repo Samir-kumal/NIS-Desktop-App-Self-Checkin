@@ -6,7 +6,7 @@ import UserSearch from './UserSearch'
 
 const App = () => {
   return (
-    <div>
+    <div className=''>
       {/* <Main/>
        */}
        <UserSearch/>

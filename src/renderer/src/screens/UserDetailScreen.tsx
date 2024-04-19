@@ -1,76 +1,51 @@
-import NavBar from '@renderer/layout/NavBar'
 import '../styles/detailScreen.css'
+import NavBar2 from '@renderer/layout/NavBar2'
 const UserDetailScreen = ({ participantData, qrValue, handleGoBack, handlePrint, printStatus }) => {
   const Hall = 'Sur Sudha Sargam Hall'
   return (
     <>
-      <NavBar />
-      <div className={`flex w-[97vw]  m-auto  h-fit  py-4  ${printStatus.message.length > 0 ? "justify-between" : "justify-end"} gap-x-3`}>
-       { printStatus.message.length > 0 && <div
-          className={`lg:w-[85vw] md:w-[80vw] w-[80vw] h-fit p-2 flex    ${printStatus.state === true ? 'bg-green-500' : 'bg-red-400'}`}
-        >
-         { <span className={`font-bold  text-white`}>{printStatus.message}</span>}
-        </div>}
+      <NavBar2 />
+      <div
+        className={`flex w-[97vw]  m-auto  h-fit  py-4  ${'justify-between'} gap-x-3`}
+      >
+         <h1 className="text-left text-3xl mb-4 font-bold">
+            Welcome to Nepal Investment Summit 2024
+          </h1>
         <button onClick={handleGoBack} className="bg-[#1D4389] text-white px-4 py-2 rounded-md">
           Go Back
         </button>
       </div>
+      
       <div className="bg-white w-[97vw] flex lg:flex-row md:flex-row flex-col p-4  lg:items-start md:items-start items-center  justify-between h-fit mt-1  m-auto border-2 border-black rounded-md">
         {/* User Data Section */}
 
-        <div className=" max-h-fit w-1/2 p-2">
-          <h1 className="text-left text-3xl mb-4 font-bold">Participant Information</h1>
+        <div className=" max-h-fit w-1/2  p-2">
+        <h1 className="text-left text-xl mb-4 font-bold text-transparent">
+          </h1>
+          <h1>
+            <p className="font-bold text-2xl mb-6 text-[#1D4389]">
+              {participantData.title}
+              {participantData.full_name}
+            </p>
+          </h1>
 
           <div className="flex lg:flex-row md:flex-row flex-col h-full w-full  items-start  justify-between">
             <div className="h-full">
-              <p className="font-bold mt-2">Full Name</p>
-              <p>{participantData.full_name}</p>
-
-              <p className="font-bold mt-4">Email</p>
-              <p>{participantData.email}</p>
-
-              <p className="font-bold  mt-4">Phone no.</p>
-              <p>{participantData.phone.length === 0 ? 'Not Available' : participantData.phone}</p>
-              <p className="font-bold  mt-4">Country</p>
-              <p>{participantData.country_name}</p>
-              <p className="font-bold  mt-4">Payment Method</p>
-              <p>{participantData.payment_method}</p>
-              <p className="font-bold  mt-4">What interests you to invest in Nepal?</p>
-              <p>
-                {participantData.What_interests_you_to_invest_in_Nepal === null
-                  ? ''
-                  : participantData.What_interests_you_to_invest_in_Nepal}
-              </p>
-              <p className="font-bold  mt-4">Have you participant in past event?</p>
-
-              <p>
-                {participantData.have_you_participant_in_past_event === null
-                  ? ''
-                  : participantData.have_you_participant_in_past_event}
-              </p>
-              <p className="font-bold  mt-4">Have any inventment in nepal?</p>
-
-              <p>
-                {participantData.have_any_inventment_in_nepal === null
-                  ? ''
-                  : participantData.have_any_inventment_in_nepal}
-              </p>
-            </div>
-            <span></span>
-            <div className="">
               <p className="font-bold">Position</p>
               <p>{participantData.position}</p>
 
               <p className="font-bold  mt-4">Organization Name</p>
               <p>{participantData.organization_name}</p>
-              <p className="font-bold  mt-4">Organization Website</p>
-              <p>{participantData.organization_website}</p>
+
+              <p className="font-bold  mt-4">Phone no.</p>
+              <p>{participantData.phone.length === 0 ? 'Not Available' : participantData.phone}</p>
+            </div>
+            <span></span>
+            <div className="">
               <p className="font-bold  mt-4">Hall </p>
               <p>{participantData.hall}</p>
-              <p className="font-bold  mt-4">Registration Type </p>
-              <p>Individual</p>
-              <p className="font-bold  mt-4">LinkedIn Profile URL </p>
-              <p>{participantData.Linkein_url}</p>
+              <p className="font-bold  mt-4">Country</p>
+              <p>{participantData.country_name}</p>
             </div>
           </div>
         </div>
@@ -96,10 +71,19 @@ const UserDetailScreen = ({ participantData, qrValue, handleGoBack, handlePrint,
           </div>
         </div>
       </div>
-      <div className="w-[97vw]  flex m-auto my-4 h-fit flex-row justify-end items-center">
-        <button onClick={handlePrint} className="bg-green-500 text-white px-4 py-2 rounded-md">
+      <div
+        className={`w-[97vw]  flex m-auto my-4 h-fit flex-row ${printStatus.message.length > 0 ? 'justify-between' : 'justify-end'} gap-x-3 items-center`}
+      >
+        {printStatus.message.length > 0 && (
+          <div
+            className={`    h-fit p-2 flex    ${printStatus.state === true ? 'bg-green-500 lg:w-[85vw] md:w-[80vw] w-[80vw]' : 'bg-red-400 w-full'}`}
+          >
+            {<span className={`font-bold  text-white`}>{printStatus.message}</span>}
+          </div>
+        )}
+      { printStatus.state === true || printStatus.message.length === 0  &&   <button  onClick={handlePrint} className={ `bg-green-500 text-white px-4 py-2 rounded-md print`}>
           Print QR
-        </button>
+        </button>}
       </div>
     </>
   )

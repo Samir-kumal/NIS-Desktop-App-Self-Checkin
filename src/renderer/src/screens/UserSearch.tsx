@@ -10,6 +10,7 @@ import NavBar from '@renderer/layout/NavBar'
 import LoaderComponent from '@renderer/components/LoaderComponent'
 import UserDetailScreen from './UserDetailScreen'
 import QrPrintComponent from '@renderer/components/QrPrintComponent'
+import ThankYouModal from '@renderer/components/ThankYouModal'
 
 // interface dataProps {
 //   name: string
@@ -42,18 +43,23 @@ const UserSearch = () => {
   // const { token } = useAuthProvider()
   const navigate = useNavigate()
   const [participantData, setParticipantData] = useState<any | null>(null)
+  const [showThankyouMessage, setShowThankyouMessage] = useState(false)
   const ipcHandle = () => window.electron.ipcRenderer.invoke('QR-Generate')
   const ipcResponseSuccess = () =>
-    window.electron.ipcRenderer.on('print-success', ( args) => {
+    window.electron.ipcRenderer.on('print-success', (args) => {
       console.log(args)
+      setShowThankyouMessage(true)
       UpdateQRCodePrintStatus(participantData.qr_code)
       setIsPrint(false)
-      setIsAlreadyPrinted(true);
-      setParticipantData(null);
-
+      setIsAlreadyPrinted(true)
+      setTimeout(() => {
+        setParticipantData(null)
+        setShowThankyouMessage(false)
+      }, 2000)
+      // setParticipantData(null)
     })
   const ipcResponseError = () =>
-    window.electron.ipcRenderer.on('print-error', ( args) => {
+    window.electron.ipcRenderer.on('print-error', (args) => {
       console.log(args)
       setIsPrint(false)
       setPrintStatus({
@@ -85,7 +91,7 @@ const UserSearch = () => {
     try {
       const result = await axios.get(`${BASE_URL}/api/search-qr-code?qr_code=${value}`, {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
           // Authorization: `Bearer ${token}`
         }
       })
@@ -94,15 +100,13 @@ const UserSearch = () => {
 
       setParticipantData(data.data.particiapnt)
       setQrValue(data.data.qr_code_link)
-      if(data.data.particiapnt.card_printed === 'yes'){
+      if (data.data.particiapnt.card_printed === 'yes') {
         setPrintStatus({
           state: false,
           message: 'Card Already Printed'
         })
         setIsAlreadyPrinted(true)
       }
-     
-
     } catch (error) {
       console.log(error)
       if (error instanceof AxiosError) {
@@ -121,7 +125,7 @@ const UserSearch = () => {
     try {
       const result = await axios.get(`${BASE_URL}/api/update-print-status`, {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
           // Authorization: `Bearer ${token}`
         },
         params: {
@@ -131,11 +135,9 @@ const UserSearch = () => {
       const data = result.data
       setPrintStatus({
         state: true,
-        message: data.message
+        message: 'Card Printed Successfully'
       })
       console.log(data, 'print status Updated')
-    
-  
     } catch (error) {
       console.log(error)
       if (error instanceof AxiosError) {
@@ -189,7 +191,7 @@ const UserSearch = () => {
       state: false,
       message: ''
     })
-    setIsAlreadyPrinted(false);
+    setIsAlreadyPrinted(false)
   }
 
   const handlePrint = () => {
@@ -203,26 +205,33 @@ const UserSearch = () => {
       return
     }
     if (!isAlreadyPrinted) {
-      setIsPrint(true)
-      ipcHandle()
-      ipcResponseSuccess()
-      ipcResponseError()
-      
-      
-      
+    setIsPrint(true)
+    ipcHandle()
+    ipcResponseSuccess()
+    ipcResponseError()
+    // setTimeout(() => {
+    //   setIsPrint(false)
+    // }, 2000)
+
     }
   }
   if (participantData && !isPrint && !isLoading) {
     console.log(participantData)
     console.log(qrValue)
     return (
-      <UserDetailScreen
-        participantData={participantData}
-        qrValue={qrValue}
-        handleGoBack={handleGoBack}
-        handlePrint={handlePrint}
-        printStatus={printStatus}
-      />
+      <>
+        {!showThankyouMessage ? (
+          <UserDetailScreen
+            participantData={participantData}
+            qrValue={qrValue}
+            handleGoBack={handleGoBack}
+            handlePrint={handlePrint}
+            printStatus={printStatus}
+          />
+        ) : (
+       <ThankYouModal participantData={participantData} />
+        )}
+      </>
     )
   }
 
@@ -241,12 +250,17 @@ const UserSearch = () => {
           Advanced Search
         </button> */}
       </div>
-      <div>
-        <h1 className="text-5xl font-bold text-center mt-10">Self Check in</h1>
+      <div className=" bg-transparent">
+        <h1 className="text-4xl font-bold text-center mt-20 mb-4 text-[#1D4389]">
+          Self Check-In Form
+        </h1>
       </div>
-      <div className="flex flex-col h-fit bg-white mb-10 justify-center items-center">
-        <h1 className="text-2xl font-bold text-center mt-20 mb-5">Enter QR code </h1>
-        <div className=" w-10/12 m-auto h-fit flex flex-col py-6 items-center bg-gray-300 rounded-md">
+      <div className="flex flex-col h-fit   mb-10 justify-center items-center">
+        <h1 className="text-xl opacity-50 font text-center mt-0 mb-5 ">
+          {' '}
+          Please enter or scan the QR code to Print your pass{' '}
+        </h1>
+        <div className=" w-10/12 m-auto h-fit flex flex-col py-6 items-center bg-gray-100 shadow-lg rounded-md">
           <form
             onSubmit={handleSubmit}
             className="flex flex-col w-full items-center justify-center"
