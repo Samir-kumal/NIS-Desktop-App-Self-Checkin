@@ -21,8 +21,7 @@ const UserDetailScreen = ({ participantData, qrValue, handleGoBack, handlePrint,
         {/* User Data Section */}
 
         <div className=" max-h-fit w-1/2  p-2">
-        <h1 className="text-left text-xl mb-4 font-bold text-transparent">
-          </h1>
+      
           <h1>
             <p className="font-bold text-2xl mb-6 text-[#1D4389]">
               {participantData.title}
@@ -38,8 +37,7 @@ const UserDetailScreen = ({ participantData, qrValue, handleGoBack, handlePrint,
               <p className="font-bold  mt-4">Organization Name</p>
               <p>{participantData.organization_name}</p>
 
-              <p className="font-bold  mt-4"> {separateChar(participantData.registration_fee_detail, "(")}</p>
-              <p></p>
+              <p className="font-bold  mt-4 bg-yellow-300 w-fit px-1"> {separateChar(participantData.registration_fee_detail, "(")}</p>
             </div>
             <span></span>
             <div className="">
