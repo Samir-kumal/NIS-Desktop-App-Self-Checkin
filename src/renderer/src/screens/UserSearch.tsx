@@ -114,6 +114,7 @@ const UserSearch = () => {
           state: true,
           message: error.response?.data.message
         })
+        setInput(''); 
       }
     } finally {
       setTimeout(() => {
@@ -162,6 +163,7 @@ const UserSearch = () => {
         message: 'Please enter a valid QR code'
       })
       isValid = false
+      setInput('');
       return isValid
     } else if (input.length === 0) {
       setInputError({
@@ -192,6 +194,7 @@ const UserSearch = () => {
       message: ''
     })
     setIsAlreadyPrinted(false)
+    setInput('');
   }
 
   const handlePrint = () => {

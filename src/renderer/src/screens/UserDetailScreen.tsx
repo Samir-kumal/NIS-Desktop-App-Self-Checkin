@@ -1,3 +1,4 @@
+import { seperateChar } from '@renderer/utility/seperateChar'
 import '../styles/detailScreen.css'
 import NavBar2 from '@renderer/layout/NavBar2'
 const UserDetailScreen = ({ participantData, qrValue, handleGoBack, handlePrint, printStatus }) => {
@@ -37,7 +38,7 @@ const UserDetailScreen = ({ participantData, qrValue, handleGoBack, handlePrint,
               <p className="font-bold  mt-4">Organization Name</p>
               <p>{participantData.organization_name}</p>
 
-              <p className="font-bold  mt-4"> {participantData.registration_fee_detail}</p>
+              <p className="font-bold  mt-4"> {seperateChar(participantData.registration_fee_detail, "(")}</p>
               <p></p>
             </div>
             <span></span>
