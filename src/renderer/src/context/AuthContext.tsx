@@ -16,6 +16,7 @@ interface AuthProviderProps {
 
 export const BASE_URL = 'http://nis2024.innepal.biz'
 export const Error_MESSAGE = 'Invalid token, Access Denied'
+export const  authToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjb250ZXh0Ijoie30iLCJhdWQiOiJpY25yMjAyMSIsImlzcyI6ImljbnIyMDIxIiwidXNlcl9pZCI6IjM1OWQ4MjUxLWYwN2UtNGFlMy1iNzY4LTY0MDlmMDhjYzIzOSIsInVzZXJfY2hhdF9pZCI6ImlmYXdwY2EzNTlkODI1MS1mMDdlLTRhZTMtYjc2OC02NDA5ZjA4Y2MyMzkiLCJpYXQiOjE3MTM1MzkyMzksIm5iZiI6MTcxMzUzOTIzOSwiZXhwIjoxNzE0NDAzMjM5fQ.uIt---5tQ8m0ia5A5saMwEJOQfXZAZfipO-97L1s--M"
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   //   const jwtToken = store.get('jwtToken')

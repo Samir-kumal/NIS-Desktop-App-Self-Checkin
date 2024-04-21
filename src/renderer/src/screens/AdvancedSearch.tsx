@@ -1,4 +1,4 @@
-import { BASE_URL, Error_MESSAGE } from '@renderer/context/AuthContext'
+import { authToken, BASE_URL, Error_MESSAGE } from '@renderer/context/AuthContext'
 import useAuthProvider from '@renderer/hooks/useAuthProvider'
 import NavBar from '@renderer/layout/NavBar'
 import axios, { AxiosError } from 'axios'
@@ -7,9 +7,12 @@ import { useNavigate } from 'react-router-dom'
 import UserDetailScreen from './UserDetailScreen'
 import QrPrintComponent from '@renderer/components/QrPrintComponent'
 import LoaderComponent from '@renderer/components/LoaderComponent'
+import NavBar2 from '@renderer/layout/NavBar2'
+import SearchForm from '@renderer/components/SearchForm'
 
 const AdvancedSearch = () => {
-  const { token } = useAuthProvider()
+  // const { token } = useAuthProvider()
+  const token = authToken
   const navigate = useNavigate()
   const [participantList, setParticipantList] = useState<[] | null>([])
   const [participantData, setParticipantData] = useState<any | null>(null)
@@ -39,14 +42,14 @@ const AdvancedSearch = () => {
 
   const ipcHandle = () => window.electron.ipcRenderer.invoke('QR-Generate')
   const ipcResponseSuccess = () =>
-    window.electron.ipcRenderer.on('print-success', ( args) => {
+    window.electron.ipcRenderer.on('print-success', (args) => {
       console.log(args)
       UpdateQRCodePrintStatus(participantData.qr_code)
       setIsPrint(false)
-      setIsAlreadyPrinted(true);
+      setIsAlreadyPrinted(true)
     })
   const ipcResponseError = () =>
-    window.electron.ipcRenderer.on('print-error', ( args) => {
+    window.electron.ipcRenderer.on('print-error', (args) => {
       console.log(args)
       setIsPrint(false)
       setPrintStatus({
@@ -83,8 +86,9 @@ const AdvancedSearch = () => {
     'Full Name',
     'Contact',
     'Designation',
+    'Organization',
     'Hall',
-    'Card Printed',
+    // 'Card Printed',
     'QR Code',
     'Actions'
   ]
@@ -199,8 +203,8 @@ const AdvancedSearch = () => {
       state: false,
       message: ''
     })
-    setIsAlreadyPrinted(false);
-    fetchData();
+    setIsAlreadyPrinted(false)
+    fetchData()
   }
   if (!isLoading && participantData && !isPrint) {
     return (
@@ -274,145 +278,32 @@ const AdvancedSearch = () => {
 
   return (
     <>
-      <NavBar />
-      <div className="w-full h-fit pb-4 border-b-2 relative">
-        <h1 className="font-bold text-xl p-4">Advanced Search</h1>
-        {/* <button
+      <NavBar2 />
+      <div className="w-full h-fit pb-4  relative">
+        <button
           onClick={() => navigate('/main')}
-          className=" m-1 bg-[#0f2ea0] text-white absolute top-0 z-10 right-0 text-xs p-2"
+          className=" mt-2 mx-5 bg-primary text-white   z-10 right-0 py-2 px-4 "
         >
           {' '}
-          Self Checkin
-        </button> */}
+          Go Back
+        </button>
+        <h1 className="font-bold text-xl p-4">Advanced Search</h1>
+
         <button
           onClick={handleDataRefresh}
           className="bg-[#19a277] m-2  p-2 px-6 absolute top-0 z-10 right-4 text-white"
         >
           Refresh
         </button>
-        <form onSubmit={handleSubmit}>
-          <div className="grid lg:grid-cols-4 md:grid-cols-3 relative sm:grid-cols-2 grid-cols-1 flex-wrap w-[97%] m-auto gap-4 ">
-            <div className="flex flex-col">
-              <label className="font-semibold" htmlFor="search">
-                First name
-              </label>
-              <input
-                className="border-[1px] border-black p-2 text-sm"
-                type="text"
-                placeholder="First name"
-                name="fname"
-                value={input.fname}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="flex flex-col">
-              <label className="font-semibold" htmlFor="search">
-                Middle name
-              </label>
-              <input
-                className="border-[1px] border-black p-2 text-sm"
-                type="text"
-                placeholder="Middle name"
-                name="mname"
-                value={input.mname}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="flex flex-col">
-              <label className="font-semibold" htmlFor="search">
-                Last name
-              </label>
-              <input
-                className="border-[1px] border-black p-2 text-sm"
-                type="text"
-                placeholder="Last name"
-                name="lname"
-                value={input.lname}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="flex flex-col">
-              <label className="font-semibold" htmlFor="search">
-                Email
-              </label>
-              <input
-                className="border-[1px] border-black p-2 text-sm"
-                type="text"
-                placeholder="Email"
-                name="email"
-                value={input.email}
-                onChange={handleChange}
-              />
-            </div>
-            {/* ===== 2nd row ======== */}
-            <div className="flex flex-col">
-              <label className="font-semibold" htmlFor="search">
-                Organization
-              </label>
-              <input
-                className="border-[1px] border-black p-2 text-sm"
-                type="text"
-                placeholder="Organization"
-                name="organization"
-                value={input.organization}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="flex flex-col">
-              <label className="font-semibold" htmlFor="search">
-                Contact no.
-              </label>
-              <input
-                className="border-[1px] border-black p-2 text-sm"
-                type="text"
-                placeholder="Contact no"
-                name="contact"
-                value={input.contact}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="flex flex-col">
-              <label className="font-semibold" htmlFor="search">
-                Registration no
-              </label>
-              <input
-                className="border-[1px] border-black p-2 text-sm"
-                type="text"
-                placeholder="Registration no"
-                name="regNo"
-                value={input.regNo}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="flex flex-col">
-              <label className="font-semibold" htmlFor="search">
-                Choose Payment method
-              </label>
-              <select
-                className="border-[1px] border-black p-2 text-sm"
-                value={input.payment}
-                onChange={handleChangeOption}
-                name="payment"
-                id="payment"
-              >
-                <option value="">Choose</option>
-                <option value="cash">Cash</option>
-                <option value="free">free</option>
-                <option value="bank">Bank Transfer</option>
-                <option value="Himalayan Bank">Himalayan Bank</option>
-              </select>
-            </div>
-          </div>
-          <div className=" h-fit  col-span-8  px-6  relative my-2 flex justify-end  w-full m-auto  ">
-            <button type="submit" className="bg-[#1D4389] p-2 px-6 text-white">
-              Search
-            </button>
-          </div>
-          <div className=" h-fit  col-span-8  px-6  relative my-2 flex justify-end  w-full m-auto  "></div>
-        </form>
+        <SearchForm
+          input={input}
+          handleChange={handleChange}
+          handleChangeOption={handleChangeOption}
+          handleSubmit={handleSubmit}
+        />
       </div>
       <div>
-        <div className="flex w-[97vw] mx-auto h-fit justify-between bg-[#1D4389]">
+        <div className="flex w-[97vw] mx-auto h-fit justify-between bg-primary">
           {dataHeader.map((header, index) => (
             <div
               key={index}
@@ -456,16 +347,22 @@ const AdvancedSearch = () => {
                 </div>
                 <div
                   style={{ wordBreak: 'break-word' }}
+                  className="p-2 flex flex-row flex-wrap justify-start px-2  break-words text-wrap h-fit w-full"
+                >
+                  {data.organization_name}
+                </div>
+                <div
+                  style={{ wordBreak: 'break-word' }}
                   className="p-2 flex flex-row flex-wrap justify-start  break-words px-2 text-wrap h-fit w-full"
                 >
                   {data.hall}
                 </div>
-                <div
+                {/* <div
                   style={{ wordBreak: 'break-word' }}
                   className="p-2 flex flex-row flex-wrap justify-start break-words px-2 text-wrap h-fit w-full"
                 >
                   {data.card_printed}
-                </div>
+                </div> */}
                 <div
                   style={{ wordBreak: 'break-word' }}
                   className="p-2 flex flex-row flex-wrap justify-start break-words px-2 text-wrap h-fit w-full"
@@ -478,7 +375,7 @@ const AdvancedSearch = () => {
                 >
                   <button
                     onClick={() => handleFetchUserDetail(data.qr_code)}
-                    className="bg-[#1D4389] p-2 px-4 text-white"
+                    className="bg-primary p-2 px-4 text-white"
                   >
                     View Detail
                   </button>
@@ -496,7 +393,7 @@ const AdvancedSearch = () => {
             <div className="w-full h-60  mt-4 flex flex-col justify-center items-center">
               <p className="text-red-500 text-md">{error.message}</p>
               {error.message === Error_MESSAGE && (
-                <button onClick={() => navigate('/')} className="bg-blue-800 m-2 p-2 text-white">
+                <button onClick={() => navigate('/')} className="bg-primary m-2 p-2 text-white">
                   Login Again
                 </button>
               )}
