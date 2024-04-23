@@ -54,7 +54,7 @@ const AdvancedSearch = () => {
   const token = authToken
   // const { user } = useAuthProvider()
   const navigate = useNavigate()
-  const [participantList, setParticipantList] = useState<[] | null>([])
+  const [participantList, setParticipantList] = useState<[] | null>(null)
   const [participantData, setParticipantData] = useState<any | null>(null)
   const [countryData, setCountryData] = useState<CountryData[] | null>([])
   const [registrationCategory, setRegistrationCategory] = useState<RegistrationCategory[] | null>(
@@ -549,7 +549,7 @@ const AdvancedSearch = () => {
     }
   }
 
-  const fetchhallData = async () => {
+  const fetchHallData = async () => {
     try {
       setIsLoading(true)
       const result = await axios.get(`${BASE_URL}/api/list-halls`, {
@@ -588,7 +588,7 @@ const AdvancedSearch = () => {
     // fetchData(URL)
     fetchCountryData()
     fetchRegistrationCategory()
-    fetchhallData()
+    fetchHallData()
   }, [token])
 
   console.log(isAlreadyPrinted, 'is already printed')
@@ -735,7 +735,7 @@ const AdvancedSearch = () => {
     })
     // setIsSubmitted(true)
     setIsLoading(true)
-    setParticipantList([])
+    setParticipantList(null)
 
     setError({
       state: false,
@@ -795,7 +795,7 @@ const AdvancedSearch = () => {
           hallType={hallData}
         />
       </div>
-      {participantList && participantList?.length > 0 && (
+      {participantList && participantList?.length >= 0 && (
         <FormTable
           handleFetchUserDetail={handleFetchUserDetail}
           participantList={participantList}
