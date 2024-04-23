@@ -386,7 +386,7 @@ const AdvancedSearch = () => {
           country: '',
           hall: ''
         })
-        setParticipantList([])
+        setParticipantList(null)
       }, 2000)
     })
   const ipcResponseError = () =>
