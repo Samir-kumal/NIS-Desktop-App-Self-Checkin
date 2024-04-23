@@ -14,6 +14,7 @@ import FormTable from '@renderer/components/FormTable'
 import NavBar2 from '@renderer/layout/NavBar2'
 import { useNavigate } from 'react-router-dom'
 import { isValidEmail } from '@renderer/utility/isEmailValid'
+import ThankYouModal from '@renderer/components/ThankYouModal'
 
 export interface CountryData {
   id: number
@@ -59,6 +60,8 @@ const AdvancedSearch = () => {
   const [registrationCategory, setRegistrationCategory] = useState<RegistrationCategory[] | null>(
     []
   )
+  const [showThankyouMessage, setShowThankyouMessage] = useState(false)
+
   const [hallData, setHallData] = useState<HallData[] | null>([])
   const [isPrint, setIsPrint] = useState(false)
   const [isAlreadyPrinted, setIsAlreadyPrinted] = useState(false)
@@ -103,11 +106,11 @@ const AdvancedSearch = () => {
     contactError: false,
     contactMessage: '',
     regNoError: true,
-    regNoMessage: '',
+    regNoMessage: ''
     // qr_codeError: true,
     // qr_codeMessage: '',
     // countryError: true,
-    countryMessage: ''
+    // countryMessage: ''
     // hallError: true,
     // hallMessage: ''
   })
@@ -118,7 +121,7 @@ const AdvancedSearch = () => {
     if (
       input.fname.length === 0 &&
       input.lname.length === 0 &&
-      input.email.length === 0 
+      input.email.length === 0
       // &&
       // input.contact.length === 0
     ) {
@@ -130,7 +133,7 @@ const AdvancedSearch = () => {
         lnameError: true,
         lnameMessage: 'Last Name is required',
         emailError: true,
-        emailMessage: 'Email is required',
+        emailMessage: 'Email is required'
         // contactError: true,
         // contactMessage: 'Contact is required'
       }))
@@ -149,7 +152,29 @@ const AdvancedSearch = () => {
         lnameError: true,
         lnameMessage: 'Last Name is required',
         emailError: true,
-        emailMessage: 'Email is required',
+        emailMessage: 'Email is required'
+        // contactError: true,
+        // contactMessage: 'Contact is required'
+      }))
+      return false
+    }
+    if (
+      input.fname.length === 0 &&
+      input.lname.length === 0 &&
+      input.email.length !== 0 &&
+      !isValidEmail(input.email)
+      //  &&
+      // input.contact.length === 0
+    ) {
+      setInputError((prevState) => ({
+        ...prevState,
+        fnameError: true,
+        fnameMessage: 'First Name is required',
+        lnameError: true,
+        lnameMessage: 'Last Name is required',
+
+        emailError: true,
+        emailMessage: 'Email is not Valid'
         // contactError: true,
         // contactMessage: 'Contact is required'
       }))
@@ -159,7 +184,7 @@ const AdvancedSearch = () => {
       input.fname.length !== 0 &&
       input.lname.length === 0 &&
       input.email.length !== 0 &&
-      !isValidEmail(input.email) 
+      !isValidEmail(input.email)
       // &&
       // input.contact.length === 0
     ) {
@@ -169,7 +194,7 @@ const AdvancedSearch = () => {
         lnameMessage: 'Last Name is required',
 
         emailError: true,
-        emailMessage: 'Email is not Valid',
+        emailMessage: 'Email is not Valid'
 
         // contactError: true,
         // contactMessage: 'Contact is required'
@@ -193,7 +218,7 @@ const AdvancedSearch = () => {
       }))
       return false
     }
- 
+
     if (
       input.fname.length === 0 &&
       input.lname.length === 0 &&
@@ -248,7 +273,7 @@ const AdvancedSearch = () => {
         emailMessage: 'Email is not valid'
       }))
       return false
-    } 
+    }
     // else if (input.contact.length === 0) {
     //   setInputError((prevState) => ({
     //     ...prevState,
@@ -257,14 +282,14 @@ const AdvancedSearch = () => {
     //   }))
     //   return false
     // }
-     else if ( input.contact.length > 10) {
+    else if (input.contact.length > 10) {
       setInputError((prevState) => ({
         ...prevState,
         contactError: true,
         contactMessage: 'Contact Number Should Not be more than 10 digits'
       }))
       return false
-    } else if ( input.contact.length > 0 && input.contact.length < 10) {
+    } else if (input.contact.length > 0 && input.contact.length < 10) {
       setInputError((prevState) => ({
         ...prevState,
         contactError: true,
@@ -341,9 +366,28 @@ const AdvancedSearch = () => {
   const ipcResponseSuccess = () =>
     window.electron.ipcRenderer.on('print-success', (args) => {
       console.log(args)
+      setShowThankyouMessage(true)
       UpdateQRCodePrintStatus(participantData.qr_code)
       setIsPrint(false)
       setIsAlreadyPrinted(true)
+      setTimeout(() => {
+        setParticipantData(null)
+        setShowThankyouMessage(false)
+        setInput({
+          fname: '',
+          mname: '',
+          lname: '',
+          email: '',
+          reg_category: '',
+          organization: '',
+          contact: '',
+          regNo: '',
+          qr_code: '',
+          country: '',
+          hall: ''
+        })
+        setParticipantList([])
+      }, 2000)
     })
   const ipcResponseError = () =>
     window.electron.ipcRenderer.on('print-error', (args) => {
@@ -614,13 +658,24 @@ const AdvancedSearch = () => {
             </div>
           </div>
         )}
-        <UserDetailScreen
+        {!showThankyouMessage ? (
+          <UserDetailScreen
+            participantData={participantData}
+            qrValue={qrValue}
+            handleGoBack={handleGoBack}
+            handlePrint={handlePrint}
+            printStatus={printStatus}
+          />
+        ) : (
+          <ThankYouModal participantData={participantData} />
+        )}
+        {/* <UserDetailScreen
           participantData={participantData}
           qrValue={qrValue}
           handlePrint={handlePrint}
           printStatus={printStatus}
           handleGoBack={handleGoBack}
-        />
+        /> */}
       </>
     )
   }
@@ -678,16 +733,35 @@ const AdvancedSearch = () => {
       country: '',
       hall: ''
     })
-    setIsSubmitted(true)
+    // setIsSubmitted(true)
+    setIsLoading(true)
     setParticipantList([])
 
     setError({
       state: false,
       message: ''
     })
+    setInputError({
+      fnameError: false,
+      fnameMessage: '',
+      mnameError: false,
+      mnameMessage: '',
+      lnameError: false,
+      lnameMessage: '',
+      emailError: false,
+      emailMessage: '',
+      contactError: false,
+      contactMessage: '',
+      regNoError: false,
+      regNoMessage: ''
+    })
     // const URL = `${BASE_URL}/api/search-list?fname=&mname=&lname=&email=&registration_category_new=&organization=&phone=&registration_no=&qr_code=&payment_method=&country=`
     setPageSize(0)
     // fetchData(URL)
+    // setIsLoading(false);
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 1000)
   }
 
   return (
@@ -703,6 +777,8 @@ const AdvancedSearch = () => {
             Self Checkin
           </button>
         </div>
+        <p className='absolute left-4 top-3  text-red-500'> Note: Please Fill your First name, Last name and Email to Proceed.</p>
+
         <h1 className="font-bold text-2xl p-4 ml-2">Advanced Search</h1>
 
         <SearchForm
@@ -719,16 +795,18 @@ const AdvancedSearch = () => {
           hallType={hallData}
         />
       </div>
-      <FormTable
-        handleFetchUserDetail={handleFetchUserDetail}
-        participantList={participantList}
-        totalDataCount={totalDataCount}
-        error={error}
-        isSubmitted={isSubmitted}
-        isLoading={isLoading}
-        dataHeader={dataHeader}
-        paginationValue={pageSize}
-      />
+      {participantList && participantList?.length > 0 && (
+        <FormTable
+          handleFetchUserDetail={handleFetchUserDetail}
+          participantList={participantList}
+          totalDataCount={totalDataCount}
+          error={error}
+          isSubmitted={isSubmitted}
+          isLoading={isLoading}
+          dataHeader={dataHeader}
+          paginationValue={pageSize}
+        />
+      )}
       {participantList && participantList?.length > 0 && (
         <div className="paginationComponent h-14 w-[97vw] m-auto bg-white flex border-t-4 border-black items-center gap-x-10 justify-end ">
           {pageSize !== 0 && (
