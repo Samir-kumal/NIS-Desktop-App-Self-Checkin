@@ -685,9 +685,9 @@ const AdvancedSearch = () => {
       state: false,
       message: ''
     })
-    const URL = `${BASE_URL}/api/search-list?fname=&mname=&lname=&email=&registration_category_new=&organization=&phone=&registration_no=&qr_code=&payment_method=&country=`
+    // const URL = `${BASE_URL}/api/search-list?fname=&mname=&lname=&email=&registration_category_new=&organization=&phone=&registration_no=&qr_code=&payment_method=&country=`
     setPageSize(0)
-    fetchData(URL)
+    // fetchData(URL)
   }
 
   return (
