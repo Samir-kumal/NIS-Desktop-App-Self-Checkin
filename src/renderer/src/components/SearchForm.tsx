@@ -45,7 +45,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
         <div className="grid lg:grid-cols-4 md:grid-cols-3 relative sm:grid-cols-2 grid-cols-1 flex-wrap w-[97vw] m-auto gap-4 ">
           <div className="flex flex-col">
             <label className="font-semibold" htmlFor="search">
-              First name
+              First name <span className='text-red-500'>*</span>
             </label>
             <input
               className={` ${inputError.fnameError === true ? 'border-red-500' : 'border-black'} border-[1px]  p-2 text-sm`}
@@ -74,7 +74,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
           </div>
           <div className="flex flex-col">
             <label className="font-semibold" htmlFor="search">
-              Last name
+              Last name <span className='text-red-500'>*</span>
             </label>
             <input
               className={` ${inputError.lnameError === true ? 'border-red-500' : 'border-black'} border-[1px]  p-2 text-sm`}
@@ -89,7 +89,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
           </div>
           <div className="flex flex-col">
             <label className="font-semibold" htmlFor="search">
-              Email
+              Email <span className='text-red-500'>*</span>
             </label>
             <input
               className={` ${inputError.emailError === true ? 'border-red-500' : 'border-black'} border-[1px]  p-2 text-sm`}
@@ -202,6 +202,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
               type="text"
               className="border-[1px] border-black p-2 text-sm"
               name="qr_code"
+              placeholder='Qr Code'
               value={input.qr_code}
               onChange={handleChange}
             />
