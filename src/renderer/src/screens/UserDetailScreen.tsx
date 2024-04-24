@@ -3,6 +3,8 @@ import '../styles/detailScreen.css'
 import NavBar2 from '@renderer/layout/NavBar2'
 const UserDetailScreen = ({ participantData, qrValue, handleGoBack, handlePrint, printStatus }) => {
   const Hall = 'Sur Sudha Sargam Hall'
+  const fullNameArray = participantData.full_name.toUpperCase().split(' ');
+
   return (
     <>
       <NavBar2 />
@@ -39,7 +41,7 @@ const UserDetailScreen = ({ participantData, qrValue, handleGoBack, handlePrint,
 
         <div className=" max-h-fit w-1/2  p-2">
           <h1>
-            <p className="font-bold text-2xl mb-6 text-[#1D4389]">
+            <p className="font-bold text-2xl mb-6 text-primary">
               {participantData.title}
               {participantData.full_name}
             </p>
@@ -74,31 +76,41 @@ const UserDetailScreen = ({ participantData, qrValue, handleGoBack, handlePrint,
 
         {/* QR Code Section */}
         <div>
-          <div className="flex items-center border-2 p-4  rounded-md border-black/40 justify-center w-[20rem] gap-x-2  h-fit   pl-2 ">
-            <div className="flex flex-col items-center justify-center">
-              {participantData.hall === Hall && <div className="h-1 w-1 bg-black"></div>}
-              <img src={qrValue} alt="qr-code" className=" h-full w-36" />
-              <p className="text-[10px]">{participantData.qr_code}</p>
+          <div className="flex items-center border-2 bg p-4 mt-6  rounded-md border-black/40 justify-center w-[75mm] gap-x-2  h-[50mm]   pl-2 ">
+            <div className="flex flex-col w-1/2 items-center relative justify-center">
+              {participantData.hall === Hall && (
+                <div className="h-1 w-1 absolute top-1 bg-black"></div>
+              )}
+              <img
+                src={qrValue}
+                alt="qr-code"
+                // className={`  h-auto ${participantData.full_name.length < 15 ? 'w-16 mt-5' : 'w-28'}`}
+                className="w-[20mm] h-[25mm] object-contain "
+              />
+              <p className="text-[8px] absolute bottom-0">{participantData.qr_code}</p>
             </div>
             {/* <p></p> */}
-            <div className="w-3/4 ">
-              <h1 style={{ wordBreak: 'break-word' }} className="userTitle font-serif">
+            <div className="w-fit ">
+              <h1 style={{ wordBreak: 'break-word' }} className={`userTitle font-serif ${fullNameArray[0].length > 12 ? 'text-[14px] ' : " text-lg"}`}>
                 {' '}
                 {participantData.title.toUpperCase()} {participantData.full_name.toUpperCase()}
               </h1>
               <div className="">
-                <h1 className="userPosition font-serif"> {participantData.position}</h1>
+                <h1 className={`userPosition font-serif  ${fullNameArray[0].length > 12 ? 'text-[12px]' : ""} `}> {participantData.position}</h1>
 
-                <h1 className="userOrganization font-serif">
+                <h1 className={`userOrganization font-serif ${fullNameArray[0].length > 12 ? 'text-[10px]' : ""}`}>
                   {' '}
                   {participantData.organization_name}
                 </h1>
               </div>
             </div>
           </div>
-          <button  onClick={handlePrint} className={ `bg-green-500 text-white px-4 w-full mt-2  py-3 rounded-md print`}>
-          Print your Sticker
-        </button>
+          <button
+            onClick={handlePrint}
+            className={`bg-green-500 text-white px-4 w-full mt-2  py-3 rounded-md print`}
+          >
+            Print your Sticker
+          </button>
         </div>
       </div>
       {/* <div

@@ -619,7 +619,7 @@ const AdvancedSearch = () => {
       message: ''
     })
     setIsAlreadyPrinted(false)
-    fetchData(URL)
+    // fetchData(URL)
   }
 
   const handlePrintWithWarning = () => {

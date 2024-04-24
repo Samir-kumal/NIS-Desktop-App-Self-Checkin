@@ -1,17 +1,22 @@
 .userTitleQR{
-    font-weight: bolder;
+    font-weight: 500;
+    font-family: "Anton", sans-serif;
     color: #000000;
+    letter-spacing: 1px;
     margin-top: 10px;
     margin-bottom: 20px;
 }
 .userPositionQR{
-    font-weight: bold;
-    margin-bottom: 8px;    
+    font-weight: 500;
+    font-family: "Anton", sans-serif;
+
+    /* margin-bottom: 8px;     */
     color: #000000;
 
 }
 .userOrganizationQR{
-    font-weight: bold;
+    font-family: "Anton", sans-serif;
+    font-weight: 500;
     color: #000000;
     margin-bottom: 10px;
 }
