@@ -1,5 +1,6 @@
 // import { Error_MESSAGE } from '@renderer/context/AuthContext'
 // import useAuthProvider from '@renderer/hooks/useAuthProvider'
+import { NameFormatter } from '@renderer/hoc/NameFormatter'
 import React from 'react'
 // import { useNavigate } from 'react-router-dom'
 
@@ -72,7 +73,8 @@ const FormTable: React.FC<FormTableProps> = ({
                   style={{ wordBreak: 'break-word' }}
                   className="p-2 flex flex-row flex-wrap justify-start  break-words  text-wrap h-fit w-full"
                 >
-                  {data.full_name}
+                  {/* {data.full_name} */}
+                  <NameFormatter fullName={data.full_name} />
                 </div>
                 <div
                   style={{ wordBreak: 'break-word' }}
