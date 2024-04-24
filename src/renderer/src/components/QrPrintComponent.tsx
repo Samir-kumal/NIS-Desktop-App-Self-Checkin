@@ -6,18 +6,18 @@ const QrPrintComponent = ({ participantData, qrValue }) => {
   // const lastIndex = fullNameArray.length - 1
 
   return (
-    <div className="qrPrintScreen flex w-full  gap-x-4 h-screen  flex-row items-start justify-center">
+    <div className="qrPrintScreen  flex w-full  gap-x-4 h-screen  flex-row items-start justify-center">
       <div
-        className={`flex flex-row items-center justify-center  w-full h-fit ${fullNameArray[0].length > 7 ? 'mt-16' : 'mt-8'}`}
+        className={`flex flex-row items-center justify-center  translate-x-5  w-full h-fit ${fullNameArray[0].length > 7 ? 'mt-16' : 'mt-16'}`}
       >
         <div className="flex flex-col items-center justify-center relative">
-          {participantData.hall === Hall && <div className="h-3 w-3 bg-black"></div>}
+          {participantData.hall === Hall && <div className="h-4 w-4 bg-black"></div>}
           <img src={qrValue ? qrValue : ''} alt="qr-code" width={260} height={'auto'} />
           <p className=" font-semibold text-lg absolute -bottom-2">{participantData.qr_code}</p>
         </div>
         <div className="w-[26rem] flex flex-col   ">
           <h1
-            className={` userTitleQR font-serif font-bold ${fullNameArray[0].length > 7 ? 'text-[30px]' : fullNameArray[0].length === 7 ? 'text-[40px]' : fullNameArray[0].length === 6 ? 'text-[40px]' : 'text-[50px]'} leading-snug `}
+            className={` userTitleQR font-serif font-bold  ${fullNameArray[0].length > 12 ? 'text-[40px]' : fullNameArray[0].length === 7 ? 'text-[50px]' : fullNameArray[0].length === 6 ? 'text-[50px]' : 'text-[50px]'} leading-snug `}
           >
             {participantData.title.toUpperCase()} {fullName}
           </h1>
