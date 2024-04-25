@@ -8,7 +8,7 @@ import {  Error_MESSAGE, LiveServer, Server, TestServer } from '@renderer/contex
 // import useAuthProvider from '@renderer/hooks/useAuthProvider'
 import NavBar from '@renderer/layout/NavBar'
 import LoaderComponent from '@renderer/components/LoaderComponent'
-import UserDetailScreen from './UserDetailScreen'
+// import UserDetailScreen from './UserDetailScreen'
 import QrPrintComponent from '@renderer/components/QrPrintComponent'
 import ThankYouModal from '@renderer/components/ThankYouModal'
 import useAuthProvider from '@renderer/hooks/useAuthProvider'
@@ -42,6 +42,8 @@ const UserSearch = () => {
     state: false,
     message: ''
   })
+
+  console.log(printModal)
 
   const [qrValue, setQrValue] = useState<any | null>(null)
   // const { token } = useAuthProvider()
@@ -78,8 +80,11 @@ const UserSearch = () => {
           state: false,
           message: ''
         })
+        setPrintStatus({
+          state: false,
+          message: ""
+        })
       }, 2000)
-      // setParticipantData(null)
     })
   const ipcResponseError = () =>
     window.electron.ipcRenderer.on('print-error', (args) => {
@@ -278,18 +283,18 @@ const UserSearch = () => {
       // }, 2000)
     }
   }
-  const handlePrintWithWarning = () => {
-    setPrintModal(false)
-    setIsPrint(true)
-    ipcHandle()
-    ipcResponseSuccess()
-    ipcResponseError()
-    setInput('')
-  }
+  // const handlePrintWithWarning = () => {
+  //   setPrintModal(false)
+  //   setIsPrint(true)
+  //   ipcHandle()
+  //   ipcResponseSuccess()
+  //   ipcResponseError()
+  //   setInput('')
+  // }
 
-  const handleModalClose = () => {
-    setPrintModal(false)
-  }
+  // const handleModalClose = () => {
+  //   setPrintModal(false)
+  // }
   if (participantData && !isPrint && !isLoading) {
     console.log(participantData)
     console.log(qrValue)

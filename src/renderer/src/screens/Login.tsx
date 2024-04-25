@@ -3,7 +3,7 @@ import { isValidEmail } from '@renderer/utility/isEmailValid'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios, { AxiosError } from 'axios'
-import { BASE_URL } from '@renderer/context/AuthContext'
+// import { BASE_URL } from '@renderer/context/AuthContext'
 import useAuthProvider from '@renderer/hooks/useAuthProvider'
 import LoaderComponent from '@renderer/components/LoaderComponent'
 
@@ -88,7 +88,7 @@ const Login = () => {
 
     if (validate()) {
       try {
-        const result = await axios.post(`${BASE_URL}/api/desktop-login`, {
+        const result = await axios.post(`${axios.defaults.baseURL}/api/desktop-login`, {
           email: credentials.email,
           password: credentials.password
         })
