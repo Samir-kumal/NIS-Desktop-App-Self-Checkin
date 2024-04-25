@@ -73,6 +73,11 @@ const UserSearch = () => {
       setTimeout(() => {
         setParticipantData(null)
         setShowThankyouMessage(false)
+        setIsAlreadyPrinted(false);
+        setError({
+          state: false,
+          message: ''
+        })
       }, 2000)
       // setParticipantData(null)
     })
