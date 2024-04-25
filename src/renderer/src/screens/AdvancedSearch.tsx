@@ -1,4 +1,3 @@
-import { authToken } from '@renderer/context/AuthContext'
 // import useAuthProvider from '@renderer/hooks/useAuthProvider'
 // import NavBar from '@renderer/layout/NavBar'
 import axios, { AxiosError } from 'axios'
