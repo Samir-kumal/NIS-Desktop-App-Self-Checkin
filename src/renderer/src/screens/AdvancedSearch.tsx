@@ -1,4 +1,4 @@
-import { BASE_URL } from '@renderer/context/AuthContext'
+import { authToken, BASE_URL } from '@renderer/context/AuthContext'
 // import useAuthProvider from '@renderer/hooks/useAuthProvider'
 // import NavBar from '@renderer/layout/NavBar'
 import axios, { AxiosError } from 'axios'
@@ -47,11 +47,10 @@ export interface HallData {
   title: string
 }
 
-const authToken =
-  'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjb250ZXh0Ijoie30iLCJhdWQiOiJpY25yMjAyMSIsImlzcyI6ImljbnIyMDIxIiwidXNlcl9pZCI6IjM1OWQ4MjUxLWYwN2UtNGFlMy1iNzY4LTY0MDlmMDhjYzIzOSIsInVzZXJfY2hhdF9pZCI6ImlmYXdwY2EzNTlkODI1MS1mMDdlLTRhZTMtYjc2OC02NDA5ZjA4Y2MyMzkiLCJpYXQiOjE3MTM3NzYwNTIsIm5iZiI6MTcxMzc3NjA1MiwiZXhwIjoxNzE0NjQwMDUyfQ.kHgDJjHn8D5Rh5RZm3wDjbSb7z7spkMavyUuiwjGFSE'
+
 
 const AdvancedSearch = () => {
-  const token = authToken
+  const token = authToken;
   // const { user } = useAuthProvider()
   const navigate = useNavigate()
   const [participantList, setParticipantList] = useState<[] | null>(null)
@@ -462,6 +461,8 @@ const AdvancedSearch = () => {
   ]
   const URL = `${BASE_URL}/api/search-list?fname=${input.fname}&mname=${input.mname}&lname=${input.lname}&email=${input.email}&registration_category_new=${input.reg_category}&organization=${input.organization}&phone=${input.contact}&registration_no=${input.regNo}&qr_code=${input.qr_code}&payment_method=&country=${input.country}&hall=${input.hall}&page=${pageSize}`
 
+
+  
   const fetchData = async (URL, pageSize = 0) => {
     try {
       setIsLoading(true)
