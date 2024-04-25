@@ -14,7 +14,7 @@ const UserDetailScreen = ({ participantData, qrValue, handleGoBack, handlePrint,
           Welcome to Nepal Investment Summit 2024
         </h1>
         <div
-        className={`w-1/3 absolute right-0   flex m-auto my-4 h-fit flex-row ${printStatus.message.length > 0 ? 'justify-between' : 'justify-end'}  items-center`}
+        className={`w-1/3 absolute right-0   flex m-auto my-4 h-fit flex-row justify-end  items-center`}
       >
         {printStatus.message.length > 0 && (
           <div
