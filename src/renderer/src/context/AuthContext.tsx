@@ -34,7 +34,7 @@ export enum LiveServer {
 
 export enum TestServer {
   BASE_URL = 'http://nis2024.innepal.biz',
-  token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjb250ZXh0Ijoie30iLCJhdWQiOiJpY25yMjAyMSIsImlzcyI6ImljbnIyMDIxIiwidXNlcl9pZCI6IjM1OWQ4MjUxLWYwN2UtNGFlMy1iNzY4LTY0MDlmMDhjYzIzOSIsInVzZXJfY2hhdF9pZCI6ImlmYXdwY2EzNTlkODI1MS1mMDdlLTRhZTMtYjc2OC02NDA5ZjA4Y2MyMzkiLCJpYXQiOjE3MTM1MzkyMzksIm5iZiI6MTcxMzUzOTIzOSwiZXhwIjoxNzE0NDAzMjM5fQ.uIt---5tQ8m0ia5A5saMwEJOQfXZAZfipO-97L1s--M'
+  token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjb250ZXh0Ijoie30iLCJhdWQiOiJpY25yMjAyMSIsImlzcyI6ImljbnIyMDIxIiwidXNlcl9pZCI6IjM1OWQ4MjUxLWYwN2UtNGFlMy1iNzY4LTY0MDlmMDhjYzIzOSIsInVzZXJfY2hhdF9pZCI6ImlmYXdwY2EzNTlkODI1MS1mMDdlLTRhZTMtYjc2OC02NDA5ZjA4Y2MyMzkiLCJpYXQiOjE3MTQwNDcyNzUsIm5iZiI6MTcxNDA0NzI3NSwiZXhwIjoxNzE2NjM5Mjc1fQ.uQLrxCXefNrDgCuxCPM9DpNpj7ryV6MStIEL4mXy2vU'
 }
 
 export enum Server {
@@ -43,27 +43,29 @@ export enum Server {
 }
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  //   const jwtToken = store.get('jwtToken')
   const [token, setToken] = useState<string | null>(() => {
     if (window.localStorage.getItem('token')) {
       return window.localStorage.getItem('token')
+    }
+    if (window.localStorage.getItem('server') === 'live' && !window.localStorage.getItem('token')) {
+      return LiveServer.token
     } else {
-      return null
+      return TestServer.token
     }
   })
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(token ? true : false)
   const [user, setUser] = useState<any>(null)
   const [server, setServer] = useState(() => {
     if (window.localStorage.getItem('server') === 'live') {
-      axios.defaults.baseURL = TestServer.BASE_URL
-      axios.defaults.data = { token: TestServer.token }
+      axios.defaults.baseURL = LiveServer.BASE_URL
+      axios.defaults.data = { token: LiveServer.token }
 
       return {
         state: 'live'
       }
     } else {
-      axios.defaults.baseURL = LiveServer.BASE_URL
-      axios.defaults.data = { token: LiveServer.token }
+      axios.defaults.baseURL = TestServer.BASE_URL
+      axios.defaults.data = { token: TestServer.token }
 
       return {
         state: 'test'
@@ -78,7 +80,8 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     if (token) {
       setIsAuthenticated(true)
     }
-  }, [token])
+  }, [token, server])
+  
 
   // useEffect(() => {
   //   const getJwtToken =  () => {
