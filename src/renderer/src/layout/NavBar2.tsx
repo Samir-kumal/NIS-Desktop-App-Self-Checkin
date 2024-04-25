@@ -46,7 +46,7 @@ const NavBar2 = () => {
 
   return (
     <>
-      <div className=" h-[20vh] w-full relative bg-[#000929] text-white flex flex-row items-center justify-normal">
+      <div className=" h-[20vh] w-full relative bg-navbar text-white flex flex-row items-center justify-normal">
         <img src={Logo} alt="logo" className="h-32 w-auto ml-4" />
         <div className="w-full flex flex-col absolute items-center justify-start px-4  ">
           <h1 className="lg:text-5xl md:text-xl sm:text-md font-bold">Nepal Investment Summit 2024</h1>

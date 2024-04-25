@@ -176,12 +176,12 @@ const Main = () => {
               className="w-full h-10 rounded-md border p-4 border-gray-300"
               placeholder="Enter your name"
             />
-            <button type="submit" className="w-20 h-10 bg-[#000929] text-white rounded-md ">
+            <button type="submit" className="w-20 h-10 bg-navbar text-white rounded-md ">
               Submit
             </button>
           </form>
           <div className="bg-white w-11/12 rounded-md m-auto h-fit">
-            <div className="flex flex-row justify-between px-4 rounded-t-md bg-[#000929] text-white p-2 mb-4 font-bold">
+            <div className="flex flex-row justify-between px-4 rounded-t-md bg-navbar text-white p-2 mb-4 font-bold">
               <h1>SN</h1>
               <h1>Full Name</h1>
               <h1>Contact</h1>
