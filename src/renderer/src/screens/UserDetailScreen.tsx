@@ -1,6 +1,7 @@
 import { separateChar } from '@renderer/utility/seperateChar'
 import '../styles/detailScreen.css'
 import NavBar2 from '@renderer/layout/NavBar2'
+import { NameFormatter } from '@renderer/hoc/NameFormatter'
 const UserDetailScreen = ({ participantData, qrValue, handleGoBack, handlePrint, printStatus }) => {
   const Hall = 'Sur Sudha Sargam Hall'
   const fullNameArray = participantData.full_name.toUpperCase().split(' ');
@@ -41,21 +42,22 @@ const UserDetailScreen = ({ participantData, qrValue, handleGoBack, handlePrint,
 
         <div className=" max-h-fit w-1/2  p-2">
           <h1>
-            <p className="font-bold text-2xl mb-6 text-primary">
+            <p className="font-bold text-2xl flex flex-row gap-x-2 mb-6 text-primary">
               {participantData.title}
-              {participantData.full_name}
+              {/* {participantData.full_name} */}
+              <NameFormatter fullName={participantData.full_name} />
             </p>
           </h1>
 
           <div className="flex lg:flex-row md:flex-row flex-col h-full w-full  items-start  justify-between">
             <div className="h-full">
               <p className="font-bold">Position</p>
-              <p>{participantData.position}</p>
+              <p>{participantData.position ===null ? "-": participantData.position}</p>
 
               <p className="font-bold  mt-4">Organization Name</p>
-              <p>{participantData.organization_name}</p>
+              <p>{participantData.organization_name === null ? "-": participantData.organization_name}</p>
               <p className="font-bold  mt-4">Phone no</p>
-              <p>{participantData.phone.length === 0 ? '-' : participantData.phone}</p>
+              <p>{participantData.phone === null || participantData.phone.length === 0 ? '-' : participantData.phone}</p>
               <p className="font-bold  mt-4">Email</p>
               <p>{participantData.email.length === 0 ? '-' : participantData.email}</p>
 
