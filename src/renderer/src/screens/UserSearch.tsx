@@ -1,23 +1,26 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // import { PosPrinter, PosPrintData, PosPrintOptions } from 'electron-pos-printer'
 // import * as path from 'path'
 // import QRCode from 'react-qr-code'
 import { useNavigate } from 'react-router-dom'
 import axios, { AxiosError } from 'axios'
-import { BASE_URL, Error_MESSAGE } from '@renderer/context/AuthContext'
+import {  Error_MESSAGE, LiveServer, Server, TestServer } from '@renderer/context/AuthContext'
 // import useAuthProvider from '@renderer/hooks/useAuthProvider'
 import NavBar from '@renderer/layout/NavBar'
 import LoaderComponent from '@renderer/components/LoaderComponent'
 import UserDetailScreen from './UserDetailScreen'
 import QrPrintComponent from '@renderer/components/QrPrintComponent'
 import ThankYouModal from '@renderer/components/ThankYouModal'
+import useAuthProvider from '@renderer/hooks/useAuthProvider'
+import UserDetailScreenSelfCheckIn from './UserDetailScreenSelfCheckIn'
 
 // interface dataProps {
 //   name: string
 // }
+
 const UserSearch = () => {
   console.log('Main Page rendered')
-
+  const {server,setServer} = useAuthProvider()
   const [input, setInput] = useState('')
   const [inputError, setInputError] = useState({
     state: false,
@@ -44,6 +47,20 @@ const UserSearch = () => {
   // const { token } = useAuthProvider()
   const navigate = useNavigate()
   const [participantData, setParticipantData] = useState<any | null>(null)
+  // const [server, setServer] = useState(() => {
+  //   if (window.localStorage.getItem('server') === 'test') {
+  //     axios.defaults.baseURL = TestServer.BASE_URL
+
+  //     return {
+  //       state: 'test'
+  //     }
+  //   } else {
+  //     axios.defaults.baseURL = LiveServer.BASE_URL
+  //     return {
+  //       state: 'live'
+  //     }
+  //   }
+  // })
   const [showThankyouMessage, setShowThankyouMessage] = useState(false)
   const ipcHandle = () => window.electron.ipcRenderer.invoke('QR-Generate')
   const ipcResponseSuccess = () =>
@@ -71,6 +88,42 @@ const UserSearch = () => {
 
   // Call the function with the URL of the image you want to load
 
+  //handle change server function
+  const handleChangeServer = (e: React.ChangeEvent<HTMLSelectElement>) => {
+ 
+    if (e.target.value === 'test') {
+      setServer({
+        state: Server.test
+      })
+      axios.defaults.baseURL = TestServer.BASE_URL
+      axios.defaults.data = { token: TestServer.token }
+      window.localStorage.setItem('token', TestServer.token)
+      window.localStorage.setItem('server', 'test')
+    } else {
+      setServer({
+        state: Server.live
+      })
+      axios.defaults.baseURL = LiveServer.BASE_URL
+      axios.defaults.data = { token: LiveServer.token }
+      window.localStorage.setItem('token', LiveServer.token)
+      window.localStorage.setItem('server', 'live')
+    }
+  }
+
+  useEffect(()=>{
+    if(window.localStorage.getItem('server') === 'test'){
+      setServer({
+        state: Server.test
+      })
+      axios.defaults.baseURL = TestServer.BASE_URL
+    }else{
+      setServer({
+        state: Server.live
+      })
+      axios.defaults.baseURL = LiveServer.BASE_URL
+    }
+       
+  },[])
   // handle change function
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setError({
@@ -90,7 +143,7 @@ const UserSearch = () => {
 
   const fetchUserDetail = async (value) => {
     try {
-      const result = await axios.get(`${BASE_URL}/api/search-qr-code?qr_code=${value}`, {
+      const result = await axios.get(`${axios.defaults.baseURL}/api/search-qr-code?qr_code=${value}`, {
         headers: {
           'Content-Type': 'application/json'
           // Authorization: `Bearer ${token}`
@@ -125,7 +178,7 @@ const UserSearch = () => {
   }
   const UpdateQRCodePrintStatus = async (qr_code) => {
     try {
-      const result = await axios.get(`${BASE_URL}/api/update-print-status`, {
+      const result = await axios.get(`${axios.defaults.baseURL}/api/update-print-status`, {
         headers: {
           'Content-Type': 'application/json'
           // Authorization: `Bearer ${token}`
@@ -214,6 +267,7 @@ const UserSearch = () => {
       ipcHandle()
       ipcResponseSuccess()
       ipcResponseError()
+      setInput('')
       // setTimeout(() => {
       //   setIsPrint(false)
       // }, 2000)
@@ -237,7 +291,7 @@ const UserSearch = () => {
     return (
       <>
         {!showThankyouMessage ? (
-          <UserDetailScreen
+          <UserDetailScreenSelfCheckIn
             participantData={participantData}
             qrValue={qrValue}
             handleGoBack={handleGoBack}
@@ -247,7 +301,7 @@ const UserSearch = () => {
         ) : (
           <ThankYouModal participantData={participantData} />
         )}
-        {printModal && (
+        {/* {printModal && (
           <div className="absolute grid place-items-center inset-0 bg-black/20 ">
             <div className="w-1/4 rounded-lg bg-white flex flex-col justify-start gap-y-6 pt-10 items-center h-1/3">
               <h1 className="font-bold text-xl">This Card is Already Printed</h1>
@@ -268,7 +322,7 @@ const UserSearch = () => {
               </div>
             </div>
           </div>
-        )}
+        )} */}
       </>
     )
   }
@@ -280,7 +334,11 @@ const UserSearch = () => {
   return (
     <>
       <NavBar />
-      <div className="flex w-full h-fit justify-end ">
+      <div className="flex w-full h-fit justify-between ">
+        <select value={server.state} onChange={handleChangeServer}>
+          <option value={Server.live}>live</option>
+          <option value={Server.test}>test</option>
+        </select>
         <button
           className="bg-primary text-white  p-2  m-1 mx-4"
           onClick={() => navigate('/advanced-search')}

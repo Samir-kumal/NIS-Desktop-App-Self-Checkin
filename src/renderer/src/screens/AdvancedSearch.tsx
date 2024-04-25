@@ -1,4 +1,4 @@
-import { authToken, BASE_URL } from '@renderer/context/AuthContext'
+import { authToken } from '@renderer/context/AuthContext'
 // import useAuthProvider from '@renderer/hooks/useAuthProvider'
 // import NavBar from '@renderer/layout/NavBar'
 import axios, { AxiosError } from 'axios'
@@ -15,6 +15,7 @@ import NavBar2 from '@renderer/layout/NavBar2'
 import { useNavigate } from 'react-router-dom'
 import { isValidEmail } from '@renderer/utility/isEmailValid'
 import ThankYouModal from '@renderer/components/ThankYouModal'
+import useAuthProvider from '@renderer/hooks/useAuthProvider'
 
 export interface CountryData {
   id: number
@@ -50,7 +51,8 @@ export interface HallData {
 
 
 const AdvancedSearch = () => {
-  const token = authToken;
+  // const token = authToken;
+  const {token} = useAuthProvider();
   // const { user } = useAuthProvider()
   const navigate = useNavigate()
   const [participantList, setParticipantList] = useState<[] | null>(null)
@@ -302,7 +304,7 @@ const AdvancedSearch = () => {
 
   const UpdateQRCodePrintStatus = async (qr_code) => {
     try {
-      const result = await axios.get(`${BASE_URL}/api/update-print-status`, {
+      const result = await axios.get(`${axios.defaults.baseURL}/api/update-print-status`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`
@@ -459,7 +461,7 @@ const AdvancedSearch = () => {
     'QR Code',
     'Actions'
   ]
-  const URL = `${BASE_URL}/api/search-list?fname=${input.fname}&mname=${input.mname}&lname=${input.lname}&email=${input.email}&registration_category_new=${input.reg_category}&organization=${input.organization}&phone=${input.contact}&registration_no=${input.regNo}&qr_code=${input.qr_code}&payment_method=&country=${input.country}&hall=${input.hall}&page=${pageSize}`
+  const URL = `${axios.defaults.baseURL}/api/search-list?fname=${input.fname}&mname=${input.mname}&lname=${input.lname}&email=${input.email}&registration_category_new=${input.reg_category}&organization=${input.organization}&phone=${input.contact}&registration_no=${input.regNo}&qr_code=${input.qr_code}&payment_method=&country=${input.country}&hall=${input.hall}&page=${pageSize}`
 
 
   
@@ -502,7 +504,7 @@ const AdvancedSearch = () => {
   const fetchCountryData = async () => {
     try {
       setIsLoading(true)
-      const result = await axios.get(`${BASE_URL}/api/country-list`, {
+      const result = await axios.get(`${axios.defaults.baseURL}/api/country-list`, {
         // headers: {
         //   Authorization: `Bearer ${token}`
         // }
@@ -527,7 +529,7 @@ const AdvancedSearch = () => {
   const fetchRegistrationCategory = async () => {
     try {
       setIsLoading(true)
-      const result = await axios.get(`${BASE_URL}/api/list-category`, {
+      const result = await axios.get(`${axios.defaults.baseURL}/api/list-category`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -553,7 +555,7 @@ const AdvancedSearch = () => {
   const fetchHallData = async () => {
     try {
       setIsLoading(true)
-      const result = await axios.get(`${BASE_URL}/api/list-halls`, {
+      const result = await axios.get(`${axios.defaults.baseURL}/api/list-halls`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -689,7 +691,7 @@ const AdvancedSearch = () => {
   const handleFetchUserDetail = async (qr_code) => {
     try {
       setIsLoading(true)
-      const result = await axios.get(`${BASE_URL}/api/search-qr-code?qr_code=${qr_code}`, {
+      const result = await axios.get(`${axios.defaults.baseURL}/api/search-qr-code?qr_code=${qr_code}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
