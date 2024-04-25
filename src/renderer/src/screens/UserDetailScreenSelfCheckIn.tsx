@@ -134,14 +134,14 @@ const UserDetailScreenSelfCheckIn = ({
                   </div>
                 </div>
               </div>
-              {participantData.card_printed !== 'yes' && (
+              {/* {participantData.card_printed !== 'yes' && (
                 <button
                   onClick={handlePrint}
                   className={`bg-green-500 text-white px-4 w-full mt-2  py-3 rounded-md print`}
                 >
                   Print your Sticker
                 </button>
-              )}
+              )} */}
               {printStatus.message.length > 0 && (
                 <div
                   className={`    h-fit p-2 flex    ${printStatus.state === true ? '' : ' w-fit'}`}
