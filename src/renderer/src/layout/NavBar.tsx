@@ -47,7 +47,7 @@ const NavBar = () => {
   return (
     <>
       <div className=" h-[35vh] w-full relative bg-navbar text-white flex flex-row items-center justify-normal">
-        <img src={Logo} alt="logo" className="lg:h-52 md:h-40 h-32 w-auto ml-4" />
+        <img src={Logo} alt="logo" className="lg:h-52 md:h-40 outline-none h-32 w-auto ml-4" />
         <div className="w-full flex flex-col absolute  items-center justify-start px-4">
           <h1 className="lg:text-5xl md:text-3xl sm:text-md font-bold">Welcome</h1>
           <h1 className="lg:text-5xl md:text-3xl sm:text-md font-bold">to</h1>

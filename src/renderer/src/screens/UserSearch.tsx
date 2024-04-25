@@ -346,8 +346,8 @@ const UserSearch = () => {
       <NavBar />
       <div className="flex w-full h-fit justify-between ">
         <select className=' outline-none' value={server.state} onChange={handleChangeServer}>
-          <option value={Server.live}>live</option>
-          <option value={Server.test}>test</option>
+          <option value={Server.live}>live server</option>
+          <option value={Server.test}>test server</option>
         </select>
         <button
           className="bg-primary text-white  p-2  m-1 mx-4"
