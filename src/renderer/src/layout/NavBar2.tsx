@@ -3,6 +3,7 @@ import Logo from '../assets/nis.png'
 import { useLocation, useNavigate } from 'react-router-dom'
 import useAuthProvider from '@renderer/hooks/useAuthProvider'
 import LoaderComponent from '@renderer/components/LoaderComponent'
+import Line_Inner from '../assets/line_inner.png'
 const NavBar2 = () => {
   const location = useLocation()
   const navigate = useNavigate()
@@ -50,7 +51,7 @@ const NavBar2 = () => {
         <img src={Logo} alt="logo" className="h-32 w-auto ml-4" />
         <div className="w-full flex flex-col absolute items-center justify-start px-4  ">
           <h1 className="lg:text-5xl md:text-xl sm:text-md font-bold">Nepal Investment Summit 2024</h1>
-          <img src="https://investinnepal.gov.np/wp-content/themes/eventeo/assets/images/line_inner.png" alt="logo" className="h-30 w-1/3  pt-10" />
+          <img src={Line_Inner} alt="logo" className="h-30 w-1/3  pt-10" />
           <h1 className="lg:text-2xl  py-1 md:text-xl sm:text-md font-bold">Self Check-In Kiosk</h1>
 
         </div>
