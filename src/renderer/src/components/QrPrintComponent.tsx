@@ -11,7 +11,7 @@ const QrPrintComponent = ({ participantData, qrValue }) => {
         className={`flex flex-row items-center justify-center  translate-x-5  w-full h-fit ${fullNameArray[0].length > 7 ? 'mt-16' : 'mt-16'}`}
       >
         <div className="flex flex-col items-center justify-center relative">
-          {participantData.hall === Hall && <div className="h-4 w-4 bg-black"></div>}
+          {participantData.hall === Hall && <div className="h-8 w-8 rounded-full bg-black"></div>}
           <img src={qrValue ? qrValue : ''} alt="qr-code" width={260} height={'auto'} />
           <p className=" font-semibold text-lg absolute -bottom-2">{participantData.qr_code}</p>
         </div>

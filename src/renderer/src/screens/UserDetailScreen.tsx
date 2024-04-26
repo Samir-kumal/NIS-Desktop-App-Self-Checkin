@@ -2,8 +2,8 @@ import { separateChar } from '@renderer/utility/seperateChar'
 import '../styles/detailScreen.css'
 import NavBar2 from '@renderer/layout/NavBar2'
 import { NameFormatter } from '@renderer/hoc/NameFormatter'
+import { Hall } from '@renderer/context/AuthContext'
 const UserDetailScreen = ({ participantData, qrValue, handleGoBack, handlePrint, printStatus }) => {
-  const Hall = 'Sur Sudha Sargam Hall'
   const fullNameArray = participantData.full_name.toUpperCase().split(' ');
 
   return (
@@ -80,8 +80,8 @@ const UserDetailScreen = ({ participantData, qrValue, handleGoBack, handlePrint,
         <div>
           <div className="flex items-center border-2 bg p-4 mt-6  rounded-md border-black/40 justify-center w-[75mm] gap-x-2  h-[50mm]   pl-2 ">
             <div className="flex flex-col w-1/2 items-center relative justify-center">
-              {participantData.hall === Hall && (
-                <div className="h-1 w-1 absolute top-1 bg-black"></div>
+              {participantData.hall !== Hall && (
+                <div className="h-3 w-3 absolute -top-1 bg-red-500"></div>
               )}
               <img
                 src={qrValue}
