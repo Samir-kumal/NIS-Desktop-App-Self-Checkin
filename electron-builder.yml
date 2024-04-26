@@ -1,5 +1,5 @@
 appId: com.selfcheckin.app
-productName: Self-CheckIn-app
+productName: Self-CheckIn-app-FINAL
 directories:
   buildResources: build
 files:
@@ -12,7 +12,7 @@ files:
 asarUnpack:
   - resources/**
 win:
-  executableName: Self-CheckIn-QR-APP
+  executableName: Self-CheckIn-QR-APP-FINAL
 nsis:
   artifactName: ${name}-setup.${ext}
   shortcutName: ${productName}
