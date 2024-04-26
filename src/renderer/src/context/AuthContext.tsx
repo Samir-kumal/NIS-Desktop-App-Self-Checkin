@@ -81,6 +81,20 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setIsAuthenticated(true)
     }
   }, [token, server])
+
+
+  useEffect(()=>{
+    if(server.state === 'live'){
+      axios.defaults.baseURL = LiveServer.BASE_URL
+      axios.defaults.data = { token: LiveServer.token }
+    }else{
+      axios.defaults.baseURL = TestServer.BASE_URL
+      axios.defaults.data = { token: TestServer.token }
+      window.localStorage.setItem('server', 'test')
+      window.localStorage.setItem('token', TestServer.token)
+    }
+  
+  },[server])
   
 
   // useEffect(() => {

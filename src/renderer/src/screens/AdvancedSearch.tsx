@@ -119,132 +119,134 @@ const AdvancedSearch = () => {
   const [totalDataCount, setTotalDataCount] = useState(0)
 
   const isValid = () => {
-    if (
-      input.fname.length === 0 &&
-      input.lname.length === 0 &&
-      input.email.length === 0
-      // &&
-      // input.contact.length === 0
-    ) {
-      setInputError((prevState) => ({
-        ...prevState,
-        fnameError: true,
-        fnameMessage: 'First Name is required',
+    // if (
+    //   input.fname.length === 0 &&
+    //   input.lname.length === 0 &&
+    //   input.email.length === 0
+    //   // &&
+    //   // input.contact.length === 0
+    // ) {
+    //   setInputError((prevState) => ({
+    //     ...prevState,
+    //     fnameError: true,
+    //     fnameMessage: 'First Name is required',
 
-        lnameError: true,
-        lnameMessage: 'Last Name is required',
-        emailError: true,
-        emailMessage: 'Email is required'
-        // contactError: true,
-        // contactMessage: 'Contact is required'
-      }))
-      return false
-    }
-    if (
-      input.fname.length !== 0 &&
-      input.lname.length === 0 &&
-      input.email.length === 0
-      //  &&
-      // input.contact.length === 0
-    ) {
-      setInputError((prevState) => ({
-        ...prevState,
+    //     lnameError: true,
+    //     lnameMessage: 'Last Name is required',
+    //     emailError: true,
+    //     emailMessage: 'Email is required'
+    //     // contactError: true,
+    //     // contactMessage: 'Contact is required'
+    //   }))
+    //   return false
+    // }
+    // if (
+    //   input.fname.length !== 0 &&
+    //   input.lname.length === 0 &&
+    //   input.email.length === 0
+    //   //  &&
+    //   // input.contact.length === 0
+    // ) {
+    //   setInputError((prevState) => ({
+    //     ...prevState,
 
-        lnameError: true,
-        lnameMessage: 'Last Name is required',
-        emailError: true,
-        emailMessage: 'Email is required'
-        // contactError: true,
-        // contactMessage: 'Contact is required'
-      }))
-      return false
-    }
-    if (
-      input.fname.length === 0 &&
-      input.lname.length === 0 &&
-      input.email.length !== 0 &&
-      !isValidEmail(input.email)
-      //  &&
-      // input.contact.length === 0
-    ) {
-      setInputError((prevState) => ({
-        ...prevState,
-        fnameError: true,
-        fnameMessage: 'First Name is required',
-        lnameError: true,
-        lnameMessage: 'Last Name is required',
+    //     lnameError: true,
+    //     lnameMessage: 'Last Name is required',
+    //     emailError: true,
+    //     emailMessage: 'Email is required'
+    //     // contactError: true,
+    //     // contactMessage: 'Contact is required'
+    //   }))
+    //   return false
+    // }
+    // if (
+    //   input.fname.length === 0 &&
+    //   input.lname.length === 0 &&
+    //   input.email.length !== 0 &&
+    //   !isValidEmail(input.email)
+    //   //  &&
+    //   // input.contact.length === 0
+    // ) {
+    //   setInputError((prevState) => ({
+    //     ...prevState,
+    //     fnameError: true,
+    //     fnameMessage: 'First Name is required',
+    //     lnameError: true,
+    //     lnameMessage: 'Last Name is required',
 
-        emailError: true,
-        emailMessage: 'Email is not Valid'
-        // contactError: true,
-        // contactMessage: 'Contact is required'
-      }))
-      return false
-    }
-    if (
-      input.fname.length !== 0 &&
-      input.lname.length === 0 &&
-      input.email.length !== 0 &&
-      !isValidEmail(input.email)
-      // &&
-      // input.contact.length === 0
-    ) {
-      setInputError((prevState) => ({
-        ...prevState,
-        lnameError: true,
-        lnameMessage: 'Last Name is required',
+    //     emailError: true,
+    //     emailMessage: 'Email is not Valid'
+    //     // contactError: true,
+    //     // contactMessage: 'Contact is required'
+    //   }))
+    //   return false
+    // }
+    // if (
+    //   input.fname.length !== 0 &&
+    //   input.lname.length === 0 &&
+    //   input.email.length !== 0 &&
+    //   !isValidEmail(input.email)
+    //   // &&
+    //   // input.contact.length === 0
+    // ) {
+    //   setInputError((prevState) => ({
+    //     ...prevState,
+    //     lnameError: true,
+    //     lnameMessage: 'Last Name is required',
 
-        emailError: true,
-        emailMessage: 'Email is not Valid'
+    //     emailError: true,
+    //     emailMessage: 'Email is not Valid'
 
-        // contactError: true,
-        // contactMessage: 'Contact is required'
-      }))
-      return false
-    }
-    if (
-      input.fname.length !== 0 &&
-      input.lname.length === 0 &&
-      input.email.length !== 0 &&
-      !isValidEmail(input.email)
-      //  &&
-      // input.contact.length !== 0
-    ) {
-      setInputError((prevState) => ({
-        ...prevState,
-        lnameError: true,
-        lnameMessage: 'Last Name is required',
-        emailError: true,
-        emailMessage: 'Email is not Valid'
-      }))
-      return false
-    }
+    //     // contactError: true,
+    //     // contactMessage: 'Contact is required'
+    //   }))
+    //   return false
+    // }
+    // if (
+    //   input.fname.length !== 0 &&
+    //   input.lname.length === 0 &&
+    //   input.email.length !== 0 &&
+    //   !isValidEmail(input.email)
+    //   //  &&
+    //   // input.contact.length !== 0
+    // ) {
+    //   setInputError((prevState) => ({
+    //     ...prevState,
+    //     lnameError: true,
+    //     lnameMessage: 'Last Name is required',
+    //     emailError: true,
+    //     emailMessage: 'Email is not Valid'
+    //   }))
+    //   return false
+    // }
 
-    if (
-      input.fname.length === 0 &&
-      input.lname.length === 0 &&
-      input.email.length !== 0
-      //  &&
-      // input.contact.length !== 0
-    ) {
-      setInputError((prevState) => ({
-        ...prevState,
+    // if (
+    //   input.fname.length === 0 &&
+    //   input.lname.length === 0 &&
+    //   input.email.length !== 0
+    //   //  &&
+    //   // input.contact.length !== 0
+    // ) {
+    //   setInputError((prevState) => ({
+    //     ...prevState,
 
-        fnameError: true,
-        fnameMessage: 'First Name is required',
+    //     fnameError: true,
+    //     fnameMessage: 'First Name is required',
 
-        lnameError: true,
-        lnameMessage: 'Last Name is required'
-      }))
-      return false
-    } else if (input.fname.length === 0) {
-      setInputError((prevState) => ({
-        ...prevState,
-        fnameError: true,
-        fnameMessage: 'First Name is required'
-      }))
-      return false
-    }
+    //     lnameError: true,
+    //     lnameMessage: 'Last Name is required'
+    //   }))
+    //   return false
+    // }
+    
+    // else if (input.fname.length === 0) {
+    //   setInputError((prevState) => ({
+    //     ...prevState,
+    //     fnameError: true,
+    //     fnameMessage: 'First Name is required'
+    //   }))
+    //   return false
+    // }
     // else if (input.mname.length === 0) {
     //   setInputError((prevState) => ({
     //     ...prevState,
@@ -253,21 +255,22 @@ const AdvancedSearch = () => {
     //   }))
     //   return false
     // }
-    else if (input.lname.length === 0) {
-      setInputError((prevState) => ({
-        ...prevState,
-        lnameError: true,
-        lnameMessage: 'Last Name is required'
-      }))
-      return false
-    } else if (input.email.length === 0) {
-      setInputError((prevState) => ({
-        ...prevState,
-        emailError: true,
-        emailMessage: 'Email is required'
-      }))
-      return false
-    } else if (!isValidEmail(input.email)) {
+    //  if (input.lname.length === 0) {
+    //   setInputError((prevState) => ({
+    //     ...prevState,
+    //     lnameError: true,
+    //     lnameMessage: 'Last Name is required'
+    //   }))
+    //   return false
+    // } else if (input.email.length === 0) {
+    //   setInputError((prevState) => ({
+    //     ...prevState,
+    //     emailError: true,
+    //     emailMessage: 'Email is required'
+    //   }))
+    //   return false
+    // }
+      if (!isValidEmail(input.email)) {
       setInputError((prevState) => ({
         ...prevState,
         emailError: true,
@@ -275,31 +278,32 @@ const AdvancedSearch = () => {
       }))
       return false
     }
-    // else if (input.contact.length === 0) {
+    else if (input.email.length === 0) {
+      setInputError((prevState) => ({
+        ...prevState,
+        emailError: true,
+        emailMessage: 'Contact is required'
+      }))
+      return false
+    } 
+    return true
+    // else if (input.contact.length > 10) {
     //   setInputError((prevState) => ({
     //     ...prevState,
     //     contactError: true,
-    //     contactMessage: 'Contact is required'
+    //     contactMessage: 'Contact Number Should Not be more than 10 digits'
     //   }))
     //   return false
+    // } else if (input.contact.length > 0 && input.contact.length < 10) {
+    //   setInputError((prevState) => ({
+    //     ...prevState,
+    //     contactError: true,
+    //     contactMessage: 'Contact Number Should Not be less than 10 digits'
+    //   }))
+    //   return false
+    // } else {
+    //   return true
     // }
-    else if (input.contact.length > 10) {
-      setInputError((prevState) => ({
-        ...prevState,
-        contactError: true,
-        contactMessage: 'Contact Number Should Not be more than 10 digits'
-      }))
-      return false
-    } else if (input.contact.length > 0 && input.contact.length < 10) {
-      setInputError((prevState) => ({
-        ...prevState,
-        contactError: true,
-        contactMessage: 'Contact Number Should Not be less than 10 digits'
-      }))
-      return false
-    } else {
-      return true
-    }
   }
 
   const UpdateQRCodePrintStatus = async (qr_code) => {
@@ -486,16 +490,7 @@ const AdvancedSearch = () => {
         })
       }
     } finally {
-      // setInput({
-      //   fname: '',
-      //   mname: '',
-      //   lname: '',
-      //   email: '',
-      //   organization: '',
-      //   contact: '',
-      //   regNo: '',
-      //   payment: ''
-      // })
+
       setTimeout(() => {
         setIsLoading(false)
       }, 1000)
@@ -761,7 +756,7 @@ const AdvancedSearch = () => {
             Self Checkin
           </button>
         </div>
-        <p className='absolute left-4 top-3  text-red-500'> Note: Please Fill your First name, Last name and Email to Proceed.</p>
+        <p className='absolute left-4 top-3  text-red-500'> Note: Please fill your Email to Proceed.</p>
 
         <h1 className="font-bold text-2xl p-4 ml-2">Advanced Search</h1>
 

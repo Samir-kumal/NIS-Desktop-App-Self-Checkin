@@ -345,7 +345,8 @@ const UserSearch = () => {
     <>
       <NavBar />
       <div className="flex w-full h-fit justify-between ">
-        <select className=' outline-none' value={server.state} onChange={handleChangeServer}>
+        <select  className=' outline-none' value={server.state} onChange={handleChangeServer}>
+          {/* <option value="">Choose</option> */}
           <option value={Server.live}>live server</option>
           <option value={Server.test}>test server</option>
         </select>
@@ -357,7 +358,7 @@ const UserSearch = () => {
         </button>
       </div>
       <div className=" bg-transparent">
-        <h1 className="text-4xl font-bold text-center mt-20 mb-4 text-primary">
+        <h1 className="text-4xl font-bold text-center mt-20 mb-4  text-primary">
           Self Check-In Form
         </h1>
       </div>
