@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 // import QRCode from 'react-qr-code'
 import { useNavigate } from 'react-router-dom'
 import axios, { AxiosError } from 'axios'
-import {  Error_MESSAGE, LiveServer, Server, TestServer } from '@renderer/context/AuthContext'
+import { Error_MESSAGE, LiveServer, Server, TestServer } from '@renderer/context/AuthContext'
 // import useAuthProvider from '@renderer/hooks/useAuthProvider'
 import NavBar from '@renderer/layout/NavBar'
 import LoaderComponent from '@renderer/components/LoaderComponent'
@@ -20,7 +20,7 @@ import UserDetailScreenSelfCheckIn from './UserDetailScreenSelfCheckIn'
 
 const UserSearch = () => {
   console.log('Main Page rendered')
-  const {server,setServer} = useAuthProvider()
+  const { server, setServer } = useAuthProvider()
   const [input, setInput] = useState('')
   const [inputError, setInputError] = useState({
     state: false,
@@ -75,14 +75,14 @@ const UserSearch = () => {
       setTimeout(() => {
         setParticipantData(null)
         setShowThankyouMessage(false)
-        setIsAlreadyPrinted(false);
+        setIsAlreadyPrinted(false)
         setError({
           state: false,
           message: ''
         })
         setPrintStatus({
           state: false,
-          message: ""
+          message: ''
         })
       }, 2000)
     })
@@ -100,7 +100,6 @@ const UserSearch = () => {
 
   //handle change server function
   const handleChangeServer = (e: React.ChangeEvent<HTMLSelectElement>) => {
- 
     if (e.target.value === 'test') {
       setServer({
         state: Server.test
@@ -120,20 +119,19 @@ const UserSearch = () => {
     }
   }
 
-  useEffect(()=>{
-    if(window.localStorage.getItem('server') === 'test'){
+  useEffect(() => {
+    if (window.localStorage.getItem('server') === 'test') {
       setServer({
         state: Server.test
       })
       axios.defaults.baseURL = TestServer.BASE_URL
-    }else{
+    } else {
       setServer({
         state: Server.live
       })
       axios.defaults.baseURL = LiveServer.BASE_URL
     }
-       
-  },[])
+  }, [])
   // handle change function
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setError({
@@ -153,12 +151,15 @@ const UserSearch = () => {
 
   const fetchUserDetail = async (value) => {
     try {
-      const result = await axios.get(`${axios.defaults.baseURL}/api/search-qr-code?qr_code=${value}`, {
-        headers: {
-          'Content-Type': 'application/json'
-          // Authorization: `Bearer ${token}`
+      const result = await axios.get(
+        `${axios.defaults.baseURL}/api/search-qr-code?qr_code=${value}`,
+        {
+          headers: {
+            'Content-Type': 'application/json'
+            // Authorization: `Bearer ${token}`
+          }
         }
-      })
+      )
       const data = result.data
       console.log(data)
 
@@ -270,6 +271,14 @@ const UserSearch = () => {
         message: 'Card Already Printed'
       })
       setIsAlreadyPrinted(true)
+
+      if (server.state === Server.test) {
+        setIsPrint(true)
+        ipcHandle()
+        ipcResponseSuccess()
+        ipcResponseError()
+        setInput('')
+      }
       return
     }
     if (!isAlreadyPrinted) {
@@ -345,7 +354,7 @@ const UserSearch = () => {
     <>
       <NavBar />
       <div className="flex w-full h-fit justify-between ">
-        <select  className=' outline-none' value={server.state} onChange={handleChangeServer}>
+        <select className=" outline-none" value={server.state} onChange={handleChangeServer}>
           {/* <option value="">Choose</option> */}
           <option value={Server.live}>live server</option>
           <option value={Server.test}>test server</option>
