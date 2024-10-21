@@ -1,19 +1,18 @@
 import React, { useEffect, useRef } from 'react'
 import Logo from '../assets/nis.png'
-import { useLocation, useNavigate } from 'react-router-dom'
 import useAuthProvider from '@renderer/hooks/useAuthProvider'
-import LoaderComponent from '@renderer/components/LoaderComponent'
-import Line_Inner from '../assets/line_inner.png'
+// import Line_Inner from '../assets/line_inner.png'
 const NavBar = () => {
-  const location = useLocation()
-  const navigate = useNavigate()
+  // const location = useLocation()
   const menuRef = useRef<HTMLDivElement>(null)
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
-  const { setIsAuthenticated } = useAuthProvider()
-  const { isAuthenticated, user, setUser } = useAuthProvider()
-  const [isLoading, setIsLoading] = React.useState(false)
+  // const { setIsAuthenticated } = useAuthProvider()
+  const { isAuthenticated, user,
+    //  setUser 
+  } = useAuthProvider()
+  // const [isLoading, setIsLoading] = React.useState(false)
 
-  console.log(user)
+  console.log(user, isMenuOpen)
   console.log(isAuthenticated, 'from navbar')
 
   useEffect(() => {
@@ -30,26 +29,26 @@ const NavBar = () => {
     }
   }, [])
 
-  const handleLogout = () => {
-    console.log('clicked')
-    setIsLoading(true)
-    setIsAuthenticated(false)
-    setUser(null)
-    const ipcHandleToken = () => window.electron.ipcRenderer.invoke('clearToken')
-    const ipcHandleUser = () => window.electron.ipcRenderer.invoke('clearUser')
-    ipcHandleToken()
-    ipcHandleUser()
-    setTimeout(() => {
-      setIsLoading(false)
-      navigate('/login')
-    }, 1000)
-  }
+  // const handleLogout = () => {
+  //   console.log('clicked')
+  //   setIsLoading(true)
+  //   setIsAuthenticated(false)
+  //   setUser(null)
+  //   const ipcHandleToken = () => window.electron.ipcRenderer.invoke('clearToken')
+  //   const ipcHandleUser = () => window.electron.ipcRenderer.invoke('clearUser')
+  //   ipcHandleToken()
+  //   ipcHandleUser()
+  //   setTimeout(() => {
+  //     setIsLoading(false)
+  //     navigate('/login')
+  //   }, 1000)
+  // }
 
   return (
     <>
-      <div className=" h-[35vh] w-full relative bg-navbar text-white flex flex-row items-center justify-normal">
-        <img src={Logo} alt="logo" className="lg:h-52 md:h-40 outline-none h-32 w-auto ml-4" />
-        <div className="w-full flex flex-col absolute  items-center justify-start px-4">
+      <div className=" h-[16vh] w-full relative bg-navbar text-white flex flex-row items-center justify-normal">
+        <img src={Logo} alt="logo" className=" outline-none h-32 w-auto ml-4" />
+        {/* <div className="w-full flex flex-col absolute  items-center justify-start px-4">
           <h1 className="lg:text-5xl md:text-3xl sm:text-md font-bold">Welcome</h1>
           <h1 className="lg:text-5xl md:text-3xl sm:text-md font-bold">to</h1>
           <h1 className="lg:text-5xl md:text-3xl sm:text-md font-bold">
@@ -57,9 +56,9 @@ const NavBar = () => {
           </h1>
           <img src={Line_Inner} alt="logo" className="h-30 w-1/3  pt-10" />
           <h1 className="lg:text-3xl md:text-2xl sm:text-md font-bold">Self Check-In Kiosk</h1>
-        </div>
+        </div> */}
 
-        {isAuthenticated && user && location.pathname === '/main' && (
+        {/* {isAuthenticated && user && location.pathname === '/main' && (
           <div ref={menuRef} className="relative  h-full flex flex-row items-center ">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -91,9 +90,8 @@ const NavBar = () => {
               </div>
             )}
           </div>
-        )}
+        )} */}
       </div>
-      {isLoading && <LoaderComponent />}
     </>
   )
 }

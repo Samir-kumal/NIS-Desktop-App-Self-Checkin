@@ -359,12 +359,12 @@ const UserSearch = () => {
           <option value={Server.live}>live server</option>
           <option value={Server.test}>test server</option>
         </select>
-        <button
+        {/* <button
           className="bg-primary text-white  p-2  m-1 mx-4"
           onClick={() => navigate('/advanced-search')}
         >
           Advanced Search
-        </button>
+        </button> */}
       </div>
       <div className=" bg-transparent">
         <h1 className="text-4xl font-bold text-center mt-20 mb-4  text-primary">
